@@ -1,0 +1,23 @@
+﻿@using CodeITCMS.Models
+@model MenuModel
+@{
+    ViewBag.Title = "AddMenu";
+}
+
+@using (Html.BeginForm("AddMenu", "Admin", FormMethod.Post, new { @class = "login100-form validate-form", role = "form", @autocomplete = "off" }))
+{
+    @Html.LabelFor(m => m.Name, new { })
+    @Html.TextBoxFor(m => m.Name, new { @id = "inputEmail", @class = "form-control", @autocomplete = "off", @placeholder = "Menu Title", @autofocus = "autofocus", @required = "required" })
+    <br />
+    @Html.LabelFor(m => m.Link, new { })
+    @Html.TextBoxFor(m => m.Link, new { @id = "inputEmail", @class = "form-control", @autocomplete = "off", @placeholder = "Menu Link", @autofocus = "autofocus", @required = "required" })
+    <br />
+    @Html.LabelFor(m => m.TabIndex, new { })
+    @Html.TextBoxFor(m => m.TabIndex, new { @id = "inputEmail", @class = "form-control", @autocomplete = "off", @placeholder = "Tab Index", @autofocus = "autofocus", @required = "required" })
+    <br />
+   
+        <input type="submit" class="btn btn-primary " name="Add" value="Submit" style="width:49.5%; text-align:center"  />
+        <input type="button" class="btn btn-default " name="Clear" value="Clear"  style="width:49.5%; text-align:center" />
+   
+}
+
