@@ -28,6 +28,7 @@ namespace CodeITCMS.Models
         }
 
         public DbSet<MenuContext> MenuContexts { get; set; }
+        public DbSet<BannerContext> BannerContexts { get; set; }
 
         public static ApplicationDbContext Create()
         {
@@ -46,5 +47,18 @@ namespace CodeITCMS.Models
         public string Link { get; set; }
 
         public int TabIndex { get; set; }
+    }
+
+    public class BannerContext
+    {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Id { get; set; }
+
+        public string Title { get; set; }
+
+        public string SubTitle { get; set; }
+
+        public string ImagePath { get; set; }
     }
 }

@@ -1,0 +1,9 @@
+﻿@using CodeITCMS.Models
+@model IEnumerable<BannerModel>
+
+
+@foreach (var item in Model)
+{
+    <li><a href="@item.Title">@item.Title</a></li>
+}
+

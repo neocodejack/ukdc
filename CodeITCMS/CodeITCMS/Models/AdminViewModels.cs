@@ -11,11 +11,28 @@ namespace CodeITCMS.Models
         [Required]
         [Display(Name="Name")]
         public string Name { get; set; }
+
         [Required]
         [Display(Name="Link to page")]
         public string Link { get; set; }
+
         [Required]
         [Display(Name="Menu Index")]
         public int TabIndex { get; set; }
+    }
+
+    public class BannerModel
+    {
+        [Required]
+        [Display(Name ="Title")]
+        public string Title { get; set; }
+
+        [Required]
+        [Display(Name ="Sub Title")]
+        public string SubTitle { get; set; }
+
+        public string Path { get; set; }
+
+        public HttpPostedFileBase File { get; set; }
     }
 }

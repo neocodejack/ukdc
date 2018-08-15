@@ -37,5 +37,15 @@ namespace CodeITCMS.Controllers
                 return PartialView(menu);
             }
         }
+
+        public ActionResult GenerateBanner()
+        {
+            using(var context = new ApplicationDbContext())
+            {
+                var banner = context.BannerContexts.Select(x => new BannerModel { Title = x.Title, SubTitle = x.SubTitle, Path = x.ImagePath }).ToList();
+
+                return PartialView(banner);
+            }
+        }
     }
 }

@@ -1767,6 +1767,8 @@
     <Content Include="Views\Admin\AddMenu.cshtml" />
     <Content Include="Views\Shared\_LayoutSite.cshtml" />
     <Content Include="Views\Home\GenerateMenu.cshtml" />
+    <Content Include="Views\Admin\AddBanner.cshtml" />
+    <Content Include="Views\Home\GenerateBanner.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
