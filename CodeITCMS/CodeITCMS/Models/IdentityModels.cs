@@ -61,4 +61,14 @@ namespace CodeITCMS.Models
 
         public string ImagePath { get; set; }
     }
+
+    public class PageContext
+    {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Id { get; set; }
+        public string PageName { get; set; }
+        public string PageContent { get; set; }
+        public string PageUrl { get; set; }
+    }
 }
