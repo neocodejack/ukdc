@@ -5,8 +5,8 @@
     <ul id="menu-nav" class="primary-menu">
         @foreach (var item in Model)
         {
-            <li><a href="@item.Link">@item.Name</a></li>
+            <li>@Html.ActionLink(item.Name, "Index", "Page", new { pageName = item.Link }, null)</li>
         }
-
+        
     </ul>
 </nav>

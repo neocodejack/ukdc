@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace CodeITCMS.Models
 {
@@ -34,5 +35,27 @@ namespace CodeITCMS.Models
         public string Path { get; set; }
 
         public HttpPostedFileBase File { get; set; }
+    }
+
+    public class PageModel
+    {
+        [Required]
+        [Display(Name ="Title")]
+        public string Title { get; set; }
+
+        [Required]
+        [Display(Name ="Content")]
+        [UIHint("tinymce_jquery_full"), AllowHtml]
+        public string Content { get; set; }
+
+        [Required]
+        [Display(Name ="Menu")]
+        public string MenuName { get; set; }
+    }
+
+    public class MenuDropDown
+    {
+        public string Key { get; set; }
+        public string Value { get; set; }
     }
 }

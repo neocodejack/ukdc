@@ -79,7 +79,7 @@ namespace CodeITCMS.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
-                    return RedirectToAction("Index", "Admin");
+                    return RedirectToAction("Home", "Admin");
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:
