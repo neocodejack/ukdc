@@ -1,0 +1,29 @@
+﻿@using CodeITCMS.Models
+@model PageModel
+@{
+    ViewBag.Title = "Add Page";
+}
+
+@using (Html.BeginForm("AddPage", "Admin", FormMethod.Post, new { @class = "login100-form validate-form", role = "form", @autocomplete = "off" }))
+{
+    @Html.LabelFor(m => m.Title, new { })
+    @Html.TextBoxFor(m => m.Title, new { @id = "inputEmail", @class = "form-control", @autocomplete = "off", @placeholder = "Menu Title", @autofocus = "autofocus", @required = "required" })
+    <br />
+    @Html.LabelFor(m => m.MenuName, new { })
+    @*@Html.TextBoxFor(m => m.MenuName, new { @id = "inputEmail", @class = "form-control", @autocomplete = "off", @placeholder = "Menu Title", @autofocus = "autofocus", @required = "required" })*@
+    @Html.DropDownListFor(m => m.MenuName, new SelectList(
+                             ViewBag.Menus,
+                             "Key",
+                             "Value"),"Select", new { @id = "inputEmail", @class = "form-control", @autocomplete = "off", @placeholder = "Menu Title", @autofocus = "autofocus", @required = "required" })
+    <br />
+    @*@Html.LabelFor(m => m.PageUrl, new { })
+    @Html.TextBoxFor(m => m.PageUrl, new { @id = "inputEmail", @class = "form-control", @autocomplete = "off", @placeholder = "Menu Link", @autofocus = "autofocus", @required = "required" })
+    <br />*@
+    @Html.LabelFor(m => m.Content, new { })
+    @Html.EditorFor(editor => editor.Content)
+    <br />
+
+    <input type="submit" class="btn btn-primary " name="Add" value="Submit" style="width:49.5%; text-align:center" />
+    <input type="button" class="btn btn-default " name="Clear" value="Clear" style="width:49.5%; text-align:center" />
+
+}

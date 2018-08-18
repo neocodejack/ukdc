@@ -1,0 +1,12 @@
+﻿@using CodeITCMS.Models
+@model IEnumerable<MenuModel>
+    
+<nav id="site-navigation" class="main-navigation" role="navigation">
+    <ul id="menu-nav" class="primary-menu">
+        @foreach (var item in Model)
+        {
+            <li>@Html.ActionLink(item.Name, "Index", "Page", new { pageName = item.Link }, null)</li>
+        }
+        
+    </ul>
+</nav>

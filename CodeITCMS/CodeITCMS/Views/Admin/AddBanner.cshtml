@@ -1,0 +1,22 @@
+﻿@using CodeITCMS.Models
+@model BannerModel
+@{
+    ViewBag.Title = "Add Banner";
+}
+
+@using (Html.BeginForm("AddBanner", "Admin", FormMethod.Post, new { @class = "login100-form validate-form", role = "form", @autocomplete = "off", enctype = "multipart/form-data" }))
+{
+    @Html.LabelFor(m => m.Title, new { })
+    @Html.TextBoxFor(m => m.Title, new { @id = "inputEmail", @class = "form-control", @autocomplete = "off", @placeholder = "Menu Title", @autofocus = "autofocus", @required = "required" })
+    <br />
+    @Html.LabelFor(m => m.SubTitle, new { })
+    @Html.TextBoxFor(m => m.SubTitle, new { @id = "inputEmail", @class = "form-control", @autocomplete = "off", @placeholder = "Menu Link", @autofocus = "autofocus", @required = "required" })
+    <br />
+    <label>Upload Image</label>
+    <input type="file" name="File"/>
+    <br />
+    <label style="color:red">@ViewBag.Message</label><br/>
+    <input type="submit" class="btn btn-primary " name="Add" value="Submit" style="width:49.5%; text-align:center" />
+    <input type="button" class="btn btn-default " name="Clear" value="Clear" style="width:49.5%; text-align:center" />
+
+}

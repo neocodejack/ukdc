@@ -1,0 +1,31 @@
+﻿@using CodeITCMS.Models
+@model IEnumerable<BannerModel>
+
+<div class="banner">
+    <div class="royalSlider rsDefault">
+        @foreach (var item in Model)
+        {
+            <div class="rsContent slide1">
+                <div class="outer_banner" style="background-image: url('../../Banners/@item.Path');">
+                </div>
+                <div class="container">
+                    <div class="caption-inner">
+                        <span class="rsABlock title" data-move-effect="top" data-delay="500" data-move-offset="500" data-speed="300" data-easing="easeOutSine"> <h2>@item.Title</h2></span>
+                        <span class="rsABlock sub-title" data-move-effect="left" data-delay="500" data-move-offset="500" data-speed="300" data-easing="easeOutSine"> <p>@item.SubTitle</p> </span>
+                    </div>
+                </div>
+            </div>
+        }
+        @*<div class="rsContent slide2">
+            <div class="outer_banner" style="background-image: url('../../images/banner2.jpg');">
+            </div>
+            <div class="container">
+                <div class="caption-inner">
+                    <span class="rsABlock title" data-move-effect="top" data-delay="500" data-move-offset="500" data-speed="300" data-easing="easeOutSine"> <h2>Arrange a direct cremation</h2></span>
+                    <span class="rsABlock sub-title" data-move-effect="left" data-delay="500" data-move-offset="500" data-speed="300" data-easing="easeOutSine"> <p>No fuss, no funeral - and prices start at just £1,195.</p> </span>
+                </div>
+            </div>
+        </div>*@
+    </div>
+</div>
+
