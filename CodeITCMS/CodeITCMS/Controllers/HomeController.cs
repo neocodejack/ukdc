@@ -47,5 +47,16 @@ namespace CodeITCMS.Controllers
                 return PartialView(banner);
             }
         }
+
+        public ActionResult GeneratePage(string pageName)
+        {
+            if (string.IsNullOrEmpty(pageName))
+                pageName = "Home";
+            using(var context = new ApplicationDbContext())
+            {
+                var page = context.PageContexts.Where(y=>y.LinkedMenu.Equals(pageName)).Select(x => new PageModel { Content = x.PageContent, Title = x.PageTitle }).FirstOrDefault();
+                return PartialView("_GeneratePage",page);
+            }
+        }
     }
 }

@@ -29,6 +29,7 @@ namespace CodeITCMS.Models
 
         public DbSet<MenuContext> MenuContexts { get; set; }
         public DbSet<BannerContext> BannerContexts { get; set; }
+        public DbSet<PageContext> PageContexts { get; set; }
 
         public static ApplicationDbContext Create()
         {
@@ -67,8 +68,11 @@ namespace CodeITCMS.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
-        public string PageName { get; set; }
+
+        public string PageTitle { get; set; }
+
         public string PageContent { get; set; }
-        public string PageUrl { get; set; }
+
+        public string LinkedMenu { get; set; }
     }
 }

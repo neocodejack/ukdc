@@ -12,9 +12,9 @@ namespace CodeITCMS.Controllers
     public class AdminController : Controller
     {
         // GET: Admin
-        public ActionResult Index()
+        public ActionResult Home()
         {
-            return View();
+            return View("Index");
         }
 
         [HttpGet]
@@ -85,6 +85,46 @@ namespace CodeITCMS.Controllers
                     context.SaveChanges();
                 }
             }
+            ViewBag.Message = "Successfully Saved";
+            return View();
+        }
+
+        [HttpGet]
+        public ActionResult AddPage()
+        {
+            var pageModel = new PageModel();
+            ViewBag.Menus = null;
+            using(var context = new ApplicationDbContext())
+            {
+                ViewBag.Menus = context.MenuContexts.Select(x => new MenuDropDown { Key = x.Link, Value = x.Name }).ToList();
+            }
+            return View(pageModel);
+        }
+
+        [HttpPost]
+        public ActionResult AddPage(PageModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var pageContent = new PageContext
+                {
+                    PageContent = model.Content,
+                    LinkedMenu = model.MenuName,
+                    PageTitle = model.Title
+                };
+
+                using(var context = new ApplicationDbContext())
+                {
+                    context.PageContexts.Add(pageContent);
+                    context.SaveChanges();
+                }
+            }
+
+            using (var context = new ApplicationDbContext())
+            {
+                ViewBag.Menus = context.MenuContexts.Select(x => new MenuDropDown { Key = x.Link, Value = x.Name }).ToList();
+            }
+
             ViewBag.Message = "Successfully Saved";
             return View();
         }

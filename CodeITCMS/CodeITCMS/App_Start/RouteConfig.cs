@@ -14,6 +14,12 @@ namespace CodeITCMS
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute(
+                name: "SpecificRoute",
+                url: "{pageName}",
+                defaults: new { controller = "Page", action = "Index", pageName = UrlParameter.Optional }
+          );
+
+            routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
