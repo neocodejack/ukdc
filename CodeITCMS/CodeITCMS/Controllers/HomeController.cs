@@ -76,5 +76,14 @@ namespace CodeITCMS.Controllers
                 return PartialView("_GetLogo", logo);
             }
         }
+
+        public ActionResult GenerateInnerBanner(string pageName)
+        {
+            using(var context = new ApplicationDbContext())
+            {
+                var page = context.PageContexts.Where(y => y.LinkedMenu.Equals(pageName)).FirstOrDefault();
+                return PartialView("_GenerateInnerBanner", page);
+            }
+        }
     }
 }
