@@ -51,6 +51,29 @@ namespace CodeITCMS.Controllers
         }
 
         [HttpGet]
+        public ActionResult ViewPages()
+        {
+            var model = new List<PageModel>();
+            using(var context = new ApplicationDbContext())
+            {
+                var contexts = context.PageContexts.ToList();
+
+                var modelItem = new PageModel();
+                foreach(var item in contexts)
+                {
+                    modelItem.Id = item.Id;
+                    modelItem.Title = item.PageTitle;
+                    modelItem.MenuName = item.LinkedMenu;
+                    modelItem.Content = item.PageContent;
+                    modelItem.FeatureText = item.FeatureText;
+
+                    model.Add(modelItem);
+                }
+            }
+            return View(model);
+        }
+
+        [HttpGet]
         public ActionResult AddBanner()
         {
             var model = new BannerModel();
