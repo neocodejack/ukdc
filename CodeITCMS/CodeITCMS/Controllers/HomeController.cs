@@ -58,5 +58,23 @@ namespace CodeITCMS.Controllers
                 return PartialView("_GeneratePage",page);
             }
         }
+
+        public ActionResult GeneratePhone()
+        {
+            using(var context = new ApplicationDbContext())
+            {
+                var phone = context.PhoneContexts.Select(x => x.Phone).FirstOrDefault();
+                return Content(phone);
+            }
+        }
+
+        public ActionResult GetLogo()
+        {
+            using(var context = new ApplicationDbContext())
+            {
+                var logo = context.LogoContexts.FirstOrDefault();
+                return PartialView("_GetLogo", logo);
+            }
+        }
     }
 }

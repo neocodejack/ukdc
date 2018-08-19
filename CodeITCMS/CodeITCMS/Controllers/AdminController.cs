@@ -110,10 +110,23 @@ namespace CodeITCMS.Controllers
                 {
                     PageContent = model.Content,
                     LinkedMenu = model.MenuName,
-                    PageTitle = model.Title
+                    PageTitle = model.Title,
+                    FeatureText = model.FeatureText
                 };
 
-                using(var context = new ApplicationDbContext())
+                if (model.File.ContentLength > 0)
+                {
+                    string FileName = Path.GetFileName(model.File.FileName);
+                    string SavePath = Path.Combine(Server.MapPath("~/InnerBanners"), FileName);
+                    if (!Directory.Exists(Server.MapPath("~/InnerBanners")))
+                    {
+                        Directory.CreateDirectory(Server.MapPath("~/InnerBanners"));
+                    }
+                    model.File.SaveAs(SavePath);
+                    pageContent.FeatureImage = FileName;
+                }
+
+                using (var context = new ApplicationDbContext())
                 {
                     context.PageContexts.Add(pageContent);
                     context.SaveChanges();
@@ -128,5 +141,128 @@ namespace CodeITCMS.Controllers
             ViewBag.Message = "Successfully Saved";
             return View();
         }
+
+        [HttpGet]
+        public ActionResult AddPhoneNumber()
+        {
+            var model = new PhoneModel();
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult AddPhoneNumber(PhoneModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                using(var context = new ApplicationDbContext())
+                {
+                    var existingModel = context.PhoneContexts.FirstOrDefault();
+                    if(existingModel == null)
+                    {
+                        var phoneContext = new PhoneContext
+                        {
+                            Phone = model.Phone
+                        };
+
+                        context.PhoneContexts.Add(phoneContext);
+                    }
+                    else
+                    {
+                        existingModel.Phone = model.Phone;
+                    }
+
+                    context.SaveChanges();
+                }
+            }
+
+            return View();
+        }
+
+        [HttpGet]
+        public ActionResult UploadLogo()
+        {
+            var model = new LogoModel();
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult UploadLogo(LogoModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                if (model.File.ContentLength > 0)
+                {
+                    string FileName = Path.GetFileName(model.File.FileName);
+                    string SavePath = Path.Combine(Server.MapPath("~/Logo"), FileName);
+                    if (!Directory.Exists(Server.MapPath("~/Logo")))
+                    {
+                        Directory.CreateDirectory(Server.MapPath("~/Logo"));
+                    }
+                    model.File.SaveAs(SavePath);
+                    var logoContext = new LogoContext
+                    {
+                        AltText = model.AltText,
+                        LogoPath = FileName
+                    };
+
+                    using(var context = new ApplicationDbContext())
+                    {
+                        var logoInfo = context.LogoContexts.FirstOrDefault();
+                        if(logoInfo == null)
+                        {
+                            context.LogoContexts.Add(logoContext);
+                        }
+                        else
+                        {
+                            logoInfo.AltText = model.AltText;
+                            logoInfo.LogoPath = FileName;
+                        }
+
+                        context.SaveChanges();
+                    }
+                }
+            }
+            return View();
+        }
+
+        [HttpGet]
+        public ActionResult AddFooter()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult AddFooter(FooterModel model)
+        {
+            if (ModelState.IsValid)
+            {
+
+            }
+            return View();
+        }
+
+        [HttpGet]
+        public ActionResult Queries()
+        {
+            var queryModel = new List<QueryModel>();
+
+            using(var context = new ApplicationDbContext())
+            {
+                var contextData = context.QueryContexts.ToList();
+
+                var viewModelItem = new QueryModel();
+                foreach(var item in contextData)
+                {
+                    viewModelItem.Name = item.Name;
+                    viewModelItem.PhoneNumber = item.PhoneNumber;
+                    viewModelItem.Email = item.Email;
+                    viewModelItem.Query = item.Query;
+
+                    queryModel.Add(viewModelItem);
+                }
+            }
+            return View(queryModel);
+        }
+
     }
 }
