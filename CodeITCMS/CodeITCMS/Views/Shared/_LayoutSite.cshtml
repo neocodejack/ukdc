@@ -43,8 +43,13 @@
                 </div>
                 <!-- .site-header-main -->
             </header>
-            @if ((ViewBag.PageName == "Home") || (ViewBag.PageName==null)){
+            @if ((ViewBag.PageName == "Home") || (ViewBag.PageName == null))
+            {
                 @Html.Action("GenerateBanner", "Home");
+            }
+            else
+            {
+                @Html.Action("GenerateInnerBanner","Home")
             }
             @RenderBody()
         </div>
