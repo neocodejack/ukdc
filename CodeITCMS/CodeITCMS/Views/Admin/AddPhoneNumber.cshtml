@@ -1,0 +1,16 @@
+﻿@using CodeITCMS.Models
+@model PhoneModel
+@{
+    ViewBag.Title = "Add Phone";
+}
+
+@using (Html.BeginForm("AddPhoneNumber", "Admin", FormMethod.Post, new { @class = "login100-form validate-form", role = "form", @autocomplete = "off" }))
+{
+    @Html.LabelFor(m => m.Phone, new { })
+    @Html.TextBoxFor(m => m.Phone, new { @id = "inputEmail", @class = "form-control", @autocomplete = "off", @placeholder = "Tab Index", @autofocus = "autofocus", @required = "required" })
+    <br />
+
+    <input type="submit" class="btn btn-primary " name="Add" value="Submit" style="width:49.5%; text-align:center" />
+    <input type="button" class="btn btn-default " name="Clear" value="Clear" style="width:49.5%; text-align:center" />
+
+}

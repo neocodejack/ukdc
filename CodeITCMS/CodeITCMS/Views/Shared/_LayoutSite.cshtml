@@ -24,9 +24,7 @@
                 <div class="site-header-main">
                     <div class="container">
                         <div class="site-branding">
-                            <a href="javascript:void(0)">
-                                <img src="~/images/logo.png" alt="UKCI Direct Cremations">
-                            </a>
+                            @Html.Action("GetLogo","Home")
                         </div>
                         <button id="menu-button" class="menu-toggle">
                             <span></span>
@@ -38,14 +36,21 @@
                             @**@
                         </div> <!-- .main-navigation-->
                         <p class="phone-block">
-                            <a href="tel:+0800 044 9454"><i class="fas fa-phone fa-1x fa-rotate-180 fa-stack-1x"></i>0800 044 9454</a>
+                            <a href="tel:+0800 044 9454"><i class="fas fa-phone fa-1x fa-rotate-180 fa-stack-1x"></i>@Html.Action("GeneratePhone", "Home")</a>
                         </p>
                     </div><!-- container -->
                     <!-- .site-header-menu -->
                 </div>
                 <!-- .site-header-main -->
             </header>
-            @Html.Action("GenerateBanner","Home")
+            @if ((ViewBag.PageName == "Home") || (ViewBag.PageName == null))
+            {
+                @Html.Action("GenerateBanner", "Home");
+            }
+            else
+            {
+                @Html.Action("GenerateInnerBanner","Home")
+            }
             @RenderBody()
         </div>
 

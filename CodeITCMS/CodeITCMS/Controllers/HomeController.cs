@@ -58,5 +58,32 @@ namespace CodeITCMS.Controllers
                 return PartialView("_GeneratePage",page);
             }
         }
+
+        public ActionResult GeneratePhone()
+        {
+            using(var context = new ApplicationDbContext())
+            {
+                var phone = context.PhoneContexts.Select(x => x.Phone).FirstOrDefault();
+                return Content(phone);
+            }
+        }
+
+        public ActionResult GetLogo()
+        {
+            using(var context = new ApplicationDbContext())
+            {
+                var logo = context.LogoContexts.FirstOrDefault();
+                return PartialView("_GetLogo", logo);
+            }
+        }
+
+        public ActionResult GenerateInnerBanner(string pageName)
+        {
+            using(var context = new ApplicationDbContext())
+            {
+                var page = context.PageContexts.Where(y => y.LinkedMenu.Equals(pageName)).FirstOrDefault();
+                return PartialView("_GenerateInnerBanner", page);
+            }
+        }
     }
 }
