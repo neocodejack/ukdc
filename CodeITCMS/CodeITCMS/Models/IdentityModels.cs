@@ -30,6 +30,10 @@ namespace CodeITCMS.Models
         public DbSet<MenuContext> MenuContexts { get; set; }
         public DbSet<BannerContext> BannerContexts { get; set; }
         public DbSet<PageContext> PageContexts { get; set; }
+        public DbSet<PhoneContext> PhoneContexts { get; set; }
+        public DbSet<LogoContext> LogoContexts { get; set; }
+        public DbSet<FooterContext> FooterContexts { get; set; }
+        public DbSet<QueryContext> QueryContexts { get; set; }
 
         public static ApplicationDbContext Create()
         {
@@ -74,5 +78,57 @@ namespace CodeITCMS.Models
         public string PageContent { get; set; }
 
         public string LinkedMenu { get; set; }
+
+        public string FeatureImage { get; set; }
+
+        public string FeatureText { get; set; }
+    }
+
+    public class PhoneContext
+    {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Id { get; set; }
+
+        public string Phone { get; set; }
+    }
+
+    public class LogoContext
+    {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Id { get; set; }
+
+        public string AltText { get; set; }
+
+        public string LogoPath { get; set; }
+    }
+
+    public class FooterContext
+    {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Id { get; set; }
+
+        public string Name { get; set; }
+
+        public string Link { get; set; }
+
+        public int TabIndex { get; set; }
+    }
+
+    public class QueryContext
+    {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Id { get; set; }
+
+        public string Name { get; set; }
+
+        public string Email { get; set; }
+
+        public string PhoneNumber { get; set; }
+
+        public string Query { get; set; }
     }
 }

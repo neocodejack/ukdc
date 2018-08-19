@@ -1,0 +1,20 @@
+﻿@using CodeITCMS.Models
+@model LogoModel
+@{
+    ViewBag.Title = "Upload Logo";
+}
+
+@using (Html.BeginForm("UploadLogo", "Admin", FormMethod.Post, new { @class = "login100-form validate-form", role = "form", @autocomplete = "off", enctype = "multipart/form-data" }))
+{
+  
+    <label>Choose Logo</label>
+    <input type="file" name="file" class="form-control" />
+    <br />
+    @Html.LabelFor(m => m.AltText, new { })
+    @Html.TextBoxFor(m => m.AltText, new { @id = "inputEmail", @class = "form-control", @autocomplete = "off", @placeholder = "Alt Text", @autofocus = "autofocus", @required = "required" })
+    
+
+    <input type="submit" class="btn btn-primary " name="Add" value="Submit" style="width:49.5%; text-align:center" />
+    <input type="button" class="btn btn-default " name="Clear" value="Clear" style="width:49.5%; text-align:center" />
+
+}
