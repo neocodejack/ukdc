@@ -38,6 +38,26 @@ namespace CodeITCMS.Controllers
             }
         }
 
+        public ActionResult GenerateFooterMenu()
+        {
+            using(var context = new ApplicationDbContext())
+            {
+                var menu = context.MenuContexts.Select(x => new MenuModel { Name = x.Name, Link = x.Link, TabIndex = x.TabIndex }).ToList().OrderBy(y => y.TabIndex);
+
+                return PartialView("_GenerateFooterMenu", menu);
+            }
+        }
+
+        public ActionResult GenerateFooter()
+        {
+            using(var context = new ApplicationDbContext())
+            {
+                var content = context.FooterContexts.Select(x => new FooterModel { Content = x.Content }).FirstOrDefault();
+
+                return PartialView("_GenerateFooter", content);
+            }
+        }
+
         public ActionResult GenerateBanner()
         {
             using(var context = new ApplicationDbContext())

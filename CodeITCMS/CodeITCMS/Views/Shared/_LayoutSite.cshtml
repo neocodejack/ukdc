@@ -24,7 +24,7 @@
                 <div class="site-header-main">
                     <div class="container">
                         <div class="site-branding">
-                            @Html.Action("GetLogo","Home")
+                            @Html.Action("GetLogo", "Home")
                         </div>
                         <button id="menu-button" class="menu-toggle">
                             <span></span>
@@ -49,11 +49,24 @@
             }
             else
             {
-                @Html.Action("GenerateInnerBanner","Home")
+                @Html.Action("GenerateInnerBanner", "Home")
             }
             @RenderBody()
         </div>
-
+        <footer id="colophon" class="site-footer" role="contentinfo">
+            <div class="site-info">
+                <div class="section-footer text-left-align">
+                    @Html.Action("GenerateFooter","Home")
+                </div>
+                <div class="footer_bottom">
+                    <div class="container">
+                        @Html.Action("GenerateFooterMenu", "Home")
+                        <p class="copyright">&copy; 2018- Direct Cremation. All Right Reserved. Designed by <a href="http://www.digitalcherry.co.uk/" target="_blank">DigitalCherry</a></p>
+                    </div>
+                </div>
+            </div>
+            <!-- .site-info -->
+        </footer>
         <!-- Royal Slider -->
         <script src="~/js/jquery.royalslider.min.js"></script>
         <script src="~/js/jquery.easing-1.3.js"></script>

@@ -103,11 +103,8 @@ namespace CodeITCMS.Models
 
         [Required]
         [Display(Name = "Link to page")]
-        public string Link { get; set; }
-
-        [Required]
-        [Display(Name = "Menu Index")]
-        public int TabIndex { get; set; }
+        [UIHint("tinymce_jquery_full"), AllowHtml]
+        public string Content { get; set; }
     }
 
     public class QueryModel
