@@ -6,19 +6,20 @@
 
 @using (Html.BeginForm("AddPage", "Admin", FormMethod.Post, new { @class = "login100-form validate-form", role = "form", @autocomplete = "off", enctype = "multipart/form-data" }))
 {
-    @Html.HiddenFor(m => m.Id)
+    @Html.HiddenFor(x => x.Id)
     @Html.LabelFor(m => m.Title, new { })
     @Html.TextBoxFor(m => m.Title, new { @id = "inputEmail", @class = "form-control", @autocomplete = "off", @placeholder = "Page Title", @autofocus = "autofocus", @required = "required" })
     <br />
     @Html.LabelFor(m => m.MenuName, new { })
-    @*@Html.TextBoxFor(m => m.MenuName, new { @id = "inputEmail", @class = "form-control", @autocomplete = "off", @placeholder = "Menu Title", @autofocus = "autofocus", @required = "required" })*@
     @Html.DropDownListFor(m => m.MenuName, new SelectList(
                              ViewBag.Menus,
                              "Key",
                              "Value"),"Select", new { @id = "inputEmail", @class = "form-control", @autocomplete = "off", @placeholder = "Menu Title", @autofocus = "autofocus", @required = "required" })
     <br />
     <label>Feature Image</label>
-    <input type="file" name="file" class = "form-control" />
+    <input type="file" name="file" class="form-control" />
+    <br/>
+    <img src="~/InnerBanners/@Model.FeatureImagePath" height="100px" width="100px"/>
     <br />
     @Html.LabelFor(m => m.FeatureText, new { })
     @Html.TextBoxFor(m => m.FeatureText, new { @id = "inputEmail", @class = "form-control", @autocomplete = "off", @placeholder = "Feature Text", @autofocus = "autofocus", @required = "required" })

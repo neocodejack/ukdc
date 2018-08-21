@@ -87,7 +87,40 @@
                         transitionSpeed: 500,
                     }
 
-                })
+                });
+
+                $("#btnRequest").click(function () {
+                    var name = $("#txtFName").val() + " " + $("#txtLName").val();
+                    var email = $("#txtEmail").val();
+                    var phone = $("#txtPhone").val();
+
+                    $.ajax({
+                        type: "POST",
+                        url: "@Url.Action("Contact","Home")",
+                        data: JSON.stringify({ Name: name, Email: email, Phone: phone }),
+                        contentType: "application/json",
+                        success: function (response) {
+                            alert("Query submitted successfully.");
+                        }
+                    });
+                });
+
+                $("#btnCallback").click(function () {
+                    var name = $("#txtFName").val() + " " + $("#txtLName").val();
+                    var email = $("#txtEmail").val();
+                    var phone = $("#txtPhone").val();
+                    var query = $("#txtQuery").val();
+
+                    $.ajax({
+                        type: "POST",
+                        url: "@Url.Action("Contact","Home")",
+                        data: JSON.stringify({ Name: name, Email: email, Phone: phone, Query: query }),
+                        contentType: "application/json",
+                        success: function (response) {
+                            alert("Query submitted successfully.");
+                        }
+                    });
+                });
             })
         </script>
 

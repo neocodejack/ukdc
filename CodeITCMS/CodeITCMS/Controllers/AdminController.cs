@@ -53,7 +53,7 @@ namespace CodeITCMS.Controllers
                     context.SaveChanges();
                 }
 
-                return RedirectToAction("ViewMenu");
+                return RedirectToAction("ViewMenus");
             }
             else
             {
@@ -69,20 +69,40 @@ namespace CodeITCMS.Controllers
             using(var context = new ApplicationDbContext())
             {
                 var menus = context.MenuContexts.ToList();
-                var menuItem = new MenuModel();
-
+                
                 foreach(var item in menus)
                 {
-                    menuItem.Id = item.Id;
-                    menuItem.Link = item.Link;
-                    menuItem.Name = item.Name;
-                    menuItem.TabIndex = item.TabIndex;
+                    var menuItem = new MenuModel
+                    {
+                        Id = item.Id,
+                        Link = item.Link,
+                        Name = item.Name,
+                        TabIndex = item.TabIndex
+                    };
 
                     menuModel.Add(menuItem);
                 }
             }
 
             return View(menuModel);
+        }
+
+        [HttpGet]
+        public ActionResult EditMenu(int Id)
+        {
+            using(var context = new ApplicationDbContext())
+            {
+                var menuItem = context.MenuContexts.Where(y => y.Id == Id).FirstOrDefault();
+                var menuModel = new MenuModel
+                {
+                    Id = Id,
+                    Link = menuItem.Link,
+                    Name = menuItem.Name,
+                    TabIndex = menuItem.TabIndex
+                };
+
+                return View(menuModel);
+            }
         }
 
         [HttpGet]
@@ -134,7 +154,7 @@ namespace CodeITCMS.Controllers
             }
 
             ViewBag.Message = "Successfully Saved";
-            return View();
+            return RedirectToAction("ViewBanners");
         }
 
         [HttpGet]
@@ -145,19 +165,40 @@ namespace CodeITCMS.Controllers
             using(var context = new ApplicationDbContext())
             {
                 var banners = context.BannerContexts.ToList();
-                var modelItem = new BannerModel();
+                
                 foreach(var item in banners)
                 {
-                    modelItem.Id = item.Id;
-                    modelItem.Path = item.ImagePath;
-                    modelItem.SubTitle = item.SubTitle;
-                    modelItem.Title = item.Title;
+                    var modelItem = new BannerModel
+                    {
+                        Id = item.Id,
+                        Path = item.ImagePath,
+                        SubTitle = item.SubTitle,
+                        Title = item.Title
+                    };
 
                     modelBanner.Add(modelItem);
                 }
             }
 
             return View(modelBanner);
+        }
+
+        [HttpGet]
+        public ActionResult EditBanner(int Id)
+        {
+            using (var context = new ApplicationDbContext())
+            {
+                var bannerItem = context.BannerContexts.Where(y => y.Id == Id).FirstOrDefault();
+                var model = new BannerModel
+                {
+                    Title = bannerItem.Title,
+                    SubTitle = bannerItem.SubTitle,
+                    Path = bannerItem.ImagePath,
+                    Id = bannerItem.Id
+                };
+
+                return View(model);
+            }
         }
 
         [HttpGet]
@@ -186,7 +227,7 @@ namespace CodeITCMS.Controllers
                 };
                 string FileName = string.Empty;
 
-                if (model.File.ContentLength > 0)
+                if ((model.File != null) && (model.File.ContentLength > 0))
                 {
                     FileName = Path.GetFileName(model.File.FileName);
 
@@ -225,7 +266,7 @@ namespace CodeITCMS.Controllers
             }
 
             ViewBag.Message = "Successfully Saved";
-            return View();
+            return RedirectToAction("ViewPages");
         }
 
         [HttpGet]
@@ -236,15 +277,18 @@ namespace CodeITCMS.Controllers
             {
                 var contexts = context.PageContexts.ToList();
 
-                var modelItem = new PageModel();
+                
                 foreach (var item in contexts)
                 {
-                    modelItem.Id = item.Id;
-                    modelItem.Title = item.PageTitle;
-                    modelItem.MenuName = item.LinkedMenu;
-                    modelItem.Content = item.PageContent;
-                    modelItem.FeatureText = item.FeatureText;
-
+                    var modelItem = new PageModel
+                    {
+                        Id = item.Id,
+                        Title = item.PageTitle,
+                        MenuName = item.LinkedMenu,
+                        Content = item.PageContent,
+                        FeatureText = item.FeatureText,
+                        FeatureImagePath = item.FeatureImage
+                    };
                     model.Add(modelItem);
                 }
             }
@@ -252,9 +296,38 @@ namespace CodeITCMS.Controllers
         }
 
         [HttpGet]
+        public ActionResult EditPage(int Id)
+        {
+            using(var context = new ApplicationDbContext())
+            {
+                var contextItem = context.PageContexts.Where(y => y.Id == Id).FirstOrDefault();
+                var model = new PageModel();
+                model.Id = contextItem.Id;
+                model.Title = contextItem.PageTitle;
+                model.Content = contextItem.PageContent;
+                model.FeatureText = contextItem.FeatureText;
+                model.FeatureImagePath = contextItem.FeatureImage;
+                model.MenuName = contextItem.LinkedMenu;
+
+                using (var menuContext = new ApplicationDbContext())
+                {
+                    ViewBag.Menus = menuContext.MenuContexts.Select(x => new MenuDropDown { Key = x.Link, Value = x.Name }).ToList();
+                }
+
+                return View(model);
+            }
+        }
+
+        [HttpGet]
         public ActionResult AddPhoneNumber()
         {
             var model = new PhoneModel();
+            using(var context = new ApplicationDbContext())
+            {
+                var phoneModel = context.PhoneContexts.FirstOrDefault();
+                model.Phone = phoneModel.Phone;
+                model.Id = phoneModel.Id;
+            }
             return View(model);
         }
 
@@ -351,7 +424,7 @@ namespace CodeITCMS.Controllers
                     {
                         var footerContext = new FooterContext
                         {
-                            Id = model.Id,
+                            Id = model.Id.Value,
                             Name = model.Name,
                             Content = model.Content
                         };
@@ -378,19 +451,37 @@ namespace CodeITCMS.Controllers
             using(var context = new ApplicationDbContext())
             {
                 var footerItem = context.FooterContexts.ToList();
-                var modelItem = new FooterModel();
 
                 foreach(var item in footerItem)
                 {
-                    modelItem.Content = item.Content;
-                    modelItem.Id = item.Id;
-                    modelItem.Name = item.Name;
+                    var modelItem = new FooterModel
+                    {
+                        Content = item.Content,
+                        Id = item.Id,
+                        Name = item.Name
+                    };
 
                     model.Add(modelItem);
                 }
             }
 
             return View(model);
+        }
+
+        [HttpGet]
+        public ActionResult EditFooter(int Id)
+        {
+            using(var context =new ApplicationDbContext())
+            {
+                var footerItem = context.FooterContexts.Where(y => y.Id == Id).FirstOrDefault();
+                var model = new FooterModel
+                {
+                    Name = footerItem.Name,
+                    Content = footerItem.Content
+                };
+
+                return View(model);
+            }
         }
 
         [HttpGet]
@@ -402,13 +493,15 @@ namespace CodeITCMS.Controllers
             {
                 var contextData = context.QueryContexts.ToList();
 
-                var viewModelItem = new QueryModel();
                 foreach(var item in contextData)
                 {
-                    viewModelItem.Name = item.Name;
-                    viewModelItem.PhoneNumber = item.PhoneNumber;
-                    viewModelItem.Email = item.Email;
-                    viewModelItem.Query = item.Query;
+                    var viewModelItem = new QueryModel
+                    {
+                        Name = item.Name,
+                        PhoneNumber = item.PhoneNumber,
+                        Email = item.Email,
+                        Query = item.Query
+                    };
 
                     queryModel.Add(viewModelItem);
                 }

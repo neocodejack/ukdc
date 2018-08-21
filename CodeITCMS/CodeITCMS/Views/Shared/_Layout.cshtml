@@ -105,16 +105,20 @@
                 </a>
             </li>
             <li class="nav-item active">
-                <a class="nav-link" href="@Url.Action("AddFooter","Admin")">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Add Footer</span>
-                </a>
-            </li>
-            <li class="nav-item active">
                 <a class="nav-link" href="@Url.Action("Queries","Admin")">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>View Queries</span>
                 </a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="menuDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="fas fa-fw fa-folder"></i>
+                    <span>Footer</span>
+                </a>
+                <div class="dropdown-menu" aria-labelledby="menuDropdown">
+                    <a class="dropdown-item" href="@Url.Action("AddFooter","Admin")">Add Footer</a>
+                    <a class="dropdown-item" href="@Url.Action("GetFooter","Admin")">View Footer</a>
+                </div>
             </li>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="menuDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

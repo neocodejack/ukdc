@@ -2,6 +2,33 @@
 @model IEnumerable<PageModel>
 
 @{
-    
+
 }
 
+<div class="card-body">
+    <div class="table-responsive">
+        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Menu</th>
+                    <th>Feature Text</th>
+                    <th>Feature Image</th>
+                    <th>Edit</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                <tr>
+                    <td>@item.Title</td>
+                    <td>@item.MenuName</td>
+                    <td>@item.FeatureText</td>
+                    <td><img src="~/InnerBanners/@item.FeatureImagePath" height="50px" width="50px"/></td>
+                    <td>@Html.ActionLink("Edit", "EditPage", "Admin", new { id = item.Id }, null)</td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
