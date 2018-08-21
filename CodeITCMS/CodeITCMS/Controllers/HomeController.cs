@@ -71,7 +71,13 @@ namespace CodeITCMS.Controllers
         public ActionResult GeneratePage(string pageName)
         {
             if (string.IsNullOrEmpty(pageName))
-                pageName = "Home";
+            {
+                using(var context = new ApplicationDbContext())
+                {
+                    pageName = context.MenuContexts.Where(y => y.TabIndex == 0).Select(x => x.Link).FirstOrDefault();
+                }
+            }
+                
             using(var context = new ApplicationDbContext())
             {
                 var page = context.PageContexts.Where(y=>y.LinkedMenu.Equals(pageName)).Select(x => new PageModel { Content = x.PageContent, Title = x.PageTitle }).FirstOrDefault();

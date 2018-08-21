@@ -1,17 +1,26 @@
-﻿
-@{
-    Layout = null;
-}
+﻿@using CodeITCMS.Models
+@model IEnumerable<FooterModel>
 
-<!DOCTYPE html>
-
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>GetFooter</title>
-</head>
-<body>
-    <div> 
+<div class="card-body">
+    <div class="table-responsive">
+        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Content</th>
+                    <th>Edit</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.Name</td>
+                        <td>@item.Content</td>
+                        <td>@Html.ActionLink("Edit", "EditFooter", "Admin", new { id = item.Id }, null)</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
     </div>
-</body>
-</html>
+</div>
