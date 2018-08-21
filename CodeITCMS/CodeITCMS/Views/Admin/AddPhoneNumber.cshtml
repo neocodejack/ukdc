@@ -6,6 +6,7 @@
 
 @using (Html.BeginForm("AddPhoneNumber", "Admin", FormMethod.Post, new { @class = "login100-form validate-form", role = "form", @autocomplete = "off" }))
 {
+    @Html.HiddenFor(m => m.Id)
     @Html.LabelFor(m => m.Phone, new { })
     @Html.TextBoxFor(m => m.Phone, new { @id = "inputEmail", @class = "form-control", @autocomplete = "off", @placeholder = "Tab Index", @autofocus = "autofocus", @required = "required" })
     <br />

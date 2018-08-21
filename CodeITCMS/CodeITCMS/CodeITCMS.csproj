@@ -2048,6 +2048,10 @@
     <Content Include="Views\Admin\GetFooter.cshtml" />
     <Content Include="Views\Home\_GenerateFooterMenu.cshtml" />
     <Content Include="Views\Home\_GenerateFooter.cshtml" />
+    <Content Include="Views\Admin\EditPage.cshtml" />
+    <Content Include="Views\Admin\EditMenu.cshtml" />
+    <Content Include="Views\Admin\EditBanner.cshtml" />
+    <Content Include="Views\Admin\EditFooter.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

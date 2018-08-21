@@ -9,7 +9,7 @@ namespace CodeITCMS.Models
 {
     public class MenuModel
     {
-        public int Id { get; set; }
+        public int? Id { get; set; }
 
         [Required]
         [Display(Name="Name")]
@@ -26,7 +26,7 @@ namespace CodeITCMS.Models
 
     public class BannerModel
     {
-        public int Id { get; set; }
+        public int? Id { get; set; }
 
         [Required]
         [Display(Name ="Title")]
@@ -43,7 +43,7 @@ namespace CodeITCMS.Models
 
     public class PageModel
     {
-        public int Id { get; set; }
+        public int? Id { get; set; }
 
         [Required]
         [Display(Name ="Title")]
@@ -65,6 +65,8 @@ namespace CodeITCMS.Models
         [Required]
         [Display(Name ="Feature Text")]
         public string FeatureText { get; set; }
+
+        public string FeatureImagePath { get; set; }
     }
 
     public class MenuDropDown
@@ -75,7 +77,7 @@ namespace CodeITCMS.Models
 
     public class PhoneModel
     {
-        public int Id { get; set; }
+        public int? Id { get; set; }
         
         [Required]
         [Display(Name ="Phone")]
@@ -95,7 +97,7 @@ namespace CodeITCMS.Models
 
     public class FooterModel
     {
-        public int Id { get; set; }
+        public int? Id { get; set; }
 
         [Required]
         [Display(Name = "Name")]

@@ -71,7 +71,13 @@ namespace CodeITCMS.Controllers
         public ActionResult GeneratePage(string pageName)
         {
             if (string.IsNullOrEmpty(pageName))
-                pageName = "Home";
+            {
+                using(var context = new ApplicationDbContext())
+                {
+                    pageName = context.MenuContexts.Where(y => y.TabIndex == 0).Select(x => x.Link).FirstOrDefault();
+                }
+            }
+                
             using(var context = new ApplicationDbContext())
             {
                 var page = context.PageContexts.Where(y=>y.LinkedMenu.Equals(pageName)).Select(x => new PageModel { Content = x.PageContent, Title = x.PageTitle }).FirstOrDefault();
@@ -103,6 +109,25 @@ namespace CodeITCMS.Controllers
             {
                 var page = context.PageContexts.Where(y => y.LinkedMenu.Equals(pageName)).FirstOrDefault();
                 return PartialView("_GenerateInnerBanner", page);
+            }
+        }
+
+        [HttpPost]
+        public JsonResult Contact(QueryModel model)
+        {
+            using(var context = new ApplicationDbContext())
+            {
+                var queryContext = new QueryContext
+                {
+                    Email = model.Email,
+                    Name = model.Name,
+                    PhoneNumber = model.PhoneNumber,
+                    Query = model.Query
+                };
+
+                context.QueryContexts.Add(queryContext);
+
+                return Json(context.SaveChanges(), JsonRequestBehavior.AllowGet);
             }
         }
     }
