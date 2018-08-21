@@ -6,7 +6,7 @@
 
 @using (Html.BeginForm("AddFooter", "Admin", FormMethod.Post, new { @class = "login100-form validate-form", role = "form", @autocomplete = "off", enctype = "multipart/form-data" }))
 {
-    @*@Html.HiddenFor(m => m.Id, new { @id = "footerId" })*@
+    @Html.HiddenFor(m => m.Id, new { @id = "footerId" })
     <br />
     @Html.LabelFor(m => m.Name, new { })
     @Html.TextBoxFor(m => m.Name, new { @id = "inputEmail", @class = "form-control", @autocomplete = "off", @placeholder = "Page Title", @autofocus = "autofocus", @required = "required" })
