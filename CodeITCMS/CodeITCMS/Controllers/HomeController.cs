@@ -111,5 +111,24 @@ namespace CodeITCMS.Controllers
                 return PartialView("_GenerateInnerBanner", page);
             }
         }
+
+        [HttpPost]
+        public JsonResult Contact(QueryModel model)
+        {
+            using(var context = new ApplicationDbContext())
+            {
+                var queryContext = new QueryContext
+                {
+                    Email = model.Email,
+                    Name = model.Name,
+                    PhoneNumber = model.PhoneNumber,
+                    Query = model.Query
+                };
+
+                context.QueryContexts.Add(queryContext);
+
+                return Json(context.SaveChanges(), JsonRequestBehavior.AllowGet);
+            }
+        }
     }
 }
