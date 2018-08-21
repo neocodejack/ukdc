@@ -38,7 +38,7 @@ namespace CodeITCMS.Controllers
 
                 using (var context = new ApplicationDbContext())
                 {
-                    if (model.Id == 0)
+                    if ((model.Id == 0) || (model.Id == null))
                     {
                         context.MenuContexts.Add(menuContext);
                     }
@@ -137,7 +137,7 @@ namespace CodeITCMS.Controllers
 
                 using(var context = new ApplicationDbContext())
                 {
-                    if (model.Id == 0)
+                    if ((model.Id == 0) || (model.Id == null))
                     {
                         context.BannerContexts.Add(bannerInfo);
                     }
@@ -242,7 +242,7 @@ namespace CodeITCMS.Controllers
 
                 using (var context = new ApplicationDbContext())
                 {
-                    if (model.Id == 0)
+                    if ((model.Id == 0) || (model.Id==null))
                     {
                         context.PageContexts.Add(pageContent);
                     }
@@ -420,11 +420,10 @@ namespace CodeITCMS.Controllers
             {
                 using(var context = new ApplicationDbContext())
                 {
-                    if (model.Id == 0)
+                    if ((model.Id == null) || (model.Id==0))
                     {
                         var footerContext = new FooterContext
                         {
-                            Id = model.Id.Value,
                             Name = model.Name,
                             Content = model.Content
                         };
