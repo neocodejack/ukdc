@@ -1,0 +1,20 @@
+﻿@using CodeITCMS.Models
+@model FooterModel
+@{
+    ViewBag.Title = "Add Page";
+}
+
+@using (Html.BeginForm("AddFooter", "Admin", FormMethod.Post, new { @class = "login100-form validate-form", role = "form", @autocomplete = "off", enctype = "multipart/form-data" }))
+{
+    @*@Html.HiddenFor(m => m.Id, new { @id = "footerId" })*@
+    <br />
+    @Html.LabelFor(m => m.Name, new { })
+    @Html.TextBoxFor(m => m.Name, new { @id = "inputEmail", @class = "form-control", @autocomplete = "off", @placeholder = "Page Title", @autofocus = "autofocus", @required = "required" })
+    <br />
+    @Html.LabelFor(m => m.Content, new { })
+    @Html.EditorFor(editor => editor.Content)
+    <br />
+    <input type="submit" class="btn btn-primary " name="Add" value="Submit" style="width:49.5%; text-align:center" />
+    <input type="button" class="btn btn-default " name="Clear" value="Clear" style="width:49.5%; text-align:center" />
+
+}
