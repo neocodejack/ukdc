@@ -102,6 +102,9 @@
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.11.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="WebActivatorEx, Version=2.0.0.0, Culture=neutral, PublicKeyToken=7b26dc2a43f6a0d4, processorArchitecture=MSIL">
+      <HintPath>..\packages\WebActivatorEx.2.0\lib\net40\WebActivatorEx.dll</HintPath>
+    </Reference>
     <Reference Include="WebGrease">
       <Private>True</Private>
       <HintPath>..\packages\WebGrease.1.6.0\lib\WebGrease.dll</HintPath>
@@ -2037,6 +2040,14 @@
     <Content Include="Views\Admin\UploadLogo.cshtml" />
     <Content Include="Views\Home\_GetLogo.cshtml" />
     <Content Include="Views\Home\_GenerateInnerBanner.cshtml" />
+    <Content Include="Views\Admin\ViewPages.cshtml" />
+    <Content Include="Views\Admin\ViewBanners.cshtml" />
+    <Content Include="Views\Admin\ViewMenus.cshtml" />
+    <Content Include="Views\Admin\AddFooter.cshtml" />
+    <Content Include="Views\Admin\Queries.cshtml" />
+    <Content Include="Views\Admin\GetFooter.cshtml" />
+    <Content Include="Views\Home\_GenerateFooterMenu.cshtml" />
+    <Content Include="Views\Home\_GenerateFooter.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

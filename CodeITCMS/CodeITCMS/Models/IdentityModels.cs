@@ -112,9 +112,8 @@ namespace CodeITCMS.Models
 
         public string Name { get; set; }
 
-        public string Link { get; set; }
+        public string Content { get; set; }
 
-        public int TabIndex { get; set; }
     }
 
     public class QueryContext
