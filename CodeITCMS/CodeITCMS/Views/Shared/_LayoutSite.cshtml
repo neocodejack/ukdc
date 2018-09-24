@@ -56,15 +56,20 @@
         <footer id="colophon" class="site-footer" role="contentinfo">
             <div class="site-info">
                 <div class="section-footer text-left-align">
-                    @Html.Action("GenerateFooter","Home")
+                    @if (ViewBag.PageName != "Contact")
+                    {
+
+                        @Html.Action("GenerateFooter", "Home")
+
+                    }
                 </div>
-                <div class="footer_bottom">
-                    <div class="container">
-                        @Html.Action("GenerateFooterMenu", "Home")
-                        <p class="copyright">&copy; 2018- Direct Cremation. All Right Reserved. Designed by <a href="http://www.digitalcherry.co.uk/" target="_blank">DigitalCherry</a></p>
+                    <div class="footer_bottom">
+                        <div class="container">
+                            @Html.Action("GenerateFooterMenu", "Home")
+                            <p class="copyright">&copy; 2018- Direct Cremation. All Right Reserved. Designed by <a href="http://www.digitalcherry.co.uk/" target="_blank">DigitalCherry</a></p>
+                        </div>
                     </div>
                 </div>
-            </div>
             <!-- .site-info -->
         </footer>
         <!-- Royal Slider -->
@@ -97,7 +102,7 @@
                     $.ajax({
                         type: "POST",
                         url: "@Url.Action("Contact","Home")",
-                        data: JSON.stringify({ Name: name, Email: email, Phone: phone }),
+                        data: JSON.stringify({ Name: name, Email: email, PhoneNumber: phone }),
                         contentType: "application/json",
                         success: function (response) {
                             alert("Query submitted successfully.");
@@ -114,7 +119,7 @@
                     $.ajax({
                         type: "POST",
                         url: "@Url.Action("Contact","Home")",
-                        data: JSON.stringify({ Name: name, Email: email, Phone: phone, Query: query }),
+                        data: JSON.stringify({ Name: name, Email: email, PhoneNumber: phone, Query: query }),
                         contentType: "application/json",
                         success: function (response) {
                             alert("Query submitted successfully.");

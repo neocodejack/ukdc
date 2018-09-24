@@ -1,0 +1,28 @@
+﻿@using CodeITCMS.Models
+@model IEnumerable<HelpAndAdviceDetailModel>
+
+<div class="card-body">
+    <div class="table-responsive">
+        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+            <thead>
+                <tr>
+                    <th>Heading</th>
+                    <th>Sub-Heading</th>
+                    <th>Edit</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.Heading</td>
+                        <td>@item.SubHeading</td>
+                        <td>@Html.ActionLink("Edit", "EditArticle", "Admin", new { id = item.Id }, null)</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
