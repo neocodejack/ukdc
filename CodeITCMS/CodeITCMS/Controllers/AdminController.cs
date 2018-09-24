@@ -217,7 +217,7 @@ namespace CodeITCMS.Controllers
                 bannerInfo.SubTitle = model.SubTitle;
                 string FileName = string.Empty;
 
-                if (model.File.ContentLength > 0)
+                if ((model.File != null) && (model.File.ContentLength > 0))
                 {
                     FileName = Path.GetFileName(model.File.FileName);
                     string SavePath = Path.Combine(Server.MapPath("~/Banners"), FileName);
