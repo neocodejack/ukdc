@@ -1,0 +1,29 @@
+﻿@using CodeITCMS.Models
+@model IEnumerable<BlogModel>
+
+<div class="card-body">
+    <div class="table-responsive">
+        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Author</th>
+                    <th>Date</th>
+                    <th>Edit</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                <tr>
+                    <td>@item.BlogName</td>
+                    <td>@item.BloggerName</td>
+                    <td>@item.BlogDate</td>
+                    <td>@Html.ActionLink("Edit", "EditBlog", "Admin", new { id = item.Id }, null)</td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+

@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
 using System.Security.Claims;
@@ -34,6 +35,9 @@ namespace CodeITCMS.Models
         public DbSet<LogoContext> LogoContexts { get; set; }
         public DbSet<FooterContext> FooterContexts { get; set; }
         public DbSet<QueryContext> QueryContexts { get; set; }
+        public DbSet<BlogContext> BlogContexts { get; set; }
+        public DbSet<HelpAndAdviceCategory> HelpAndAdviceCategories { get; set; }
+        public DbSet<HelpAndAdviceDetail> HelpAndAdviceDetails { get; set; }
 
         public static ApplicationDbContext Create()
         {
@@ -129,5 +133,40 @@ namespace CodeITCMS.Models
         public string PhoneNumber { get; set; }
 
         public string Query { get; set; }
+    }
+
+    public class BlogContext
+    {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Id { get; set; }
+
+        public string BlogName { get; set; }
+
+        public string BlogContent { get; set; }
+
+        public string BloggerName { get; set; }
+
+        public string BlogDate { get; set; }
+    }
+
+    public class HelpAndAdviceCategory
+    {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Id { get; set; }
+        public string Category { get; set; }
+    }
+
+    public class HelpAndAdviceDetail
+    {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Id { get; set; }
+        public string Heading { get; set; }
+        public string SubHeading { get; set; }
+        public int CategoryId { get; set; }
+        public string Content { get; set; }
+        public DateTime LastUpdated { get; set; }
     }
 }
