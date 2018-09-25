@@ -119,6 +119,18 @@ namespace CodeITCMS.Controllers
         }
 
         [HttpPost]
+        public ActionResult DeleteBlog(int Id)
+        {
+            using(var context = new ApplicationDbContext())
+            {
+                var blogInfo = context.BlogContexts.Where(y => y.Id.Equals(Id)).FirstOrDefault();
+                context.BlogContexts.Remove(blogInfo);
+
+                return Json(context.SaveChanges(), JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        [HttpPost]
         public ActionResult AddMenu(MenuModel model)
         {
             if (ModelState.IsValid)
@@ -196,6 +208,17 @@ namespace CodeITCMS.Controllers
                 };
 
                 return View(menuModel);
+            }
+        }
+
+        [HttpPost]
+        public ActionResult DeleteMenu(int Id)
+        {
+            using(var context = new ApplicationDbContext())
+            {
+                var menuInfo = context.MenuContexts.Where(y => y.Id.Equals(Id)).FirstOrDefault();
+                context.MenuContexts.Remove(menuInfo);
+                return Json(context.SaveChanges(), JsonRequestBehavior.AllowGet);
             }
         }
 
@@ -295,6 +318,17 @@ namespace CodeITCMS.Controllers
             }
         }
 
+        [HttpPost]
+        public ActionResult DeleteBanner(int Id)
+        {
+            using(var context = new ApplicationDbContext())
+            {
+                var bannerInfo = context.BannerContexts.Where(y => y.Id.Equals(Id)).FirstOrDefault();
+                context.BannerContexts.Remove(bannerInfo);
+                return Json(context.SaveChanges(), JsonRequestBehavior.AllowGet);
+            }
+        }
+
         [HttpGet]
         public ActionResult AddPage()
         {
@@ -343,7 +377,9 @@ namespace CodeITCMS.Controllers
                     else
                     {
                         var item = context.PageContexts.Where(y => y.Id == model.Id).FirstOrDefault();
-                        item.FeatureImage = FileName;
+                        if(!string.IsNullOrEmpty(FileName))
+                            item.FeatureImage = FileName;
+
                         item.FeatureText = model.FeatureText;
                         item.LinkedMenu = model.MenuName;
                         item.PageContent = model.Content;
@@ -361,6 +397,17 @@ namespace CodeITCMS.Controllers
 
             ViewBag.Message = "Successfully Saved";
             return RedirectToAction("ViewPages");
+        }
+
+        [HttpPost]
+        public ActionResult DeletePage(int Id)
+        {
+            using(var context = new ApplicationDbContext())
+            {
+                var pageInfo = context.PageContexts.Where(y => y.Id.Equals(Id)).FirstOrDefault();
+                context.PageContexts.Remove(pageInfo);
+                return Json(context.SaveChanges(), JsonRequestBehavior.AllowGet);
+            }
         }
 
         [HttpGet]
@@ -775,6 +822,17 @@ namespace CodeITCMS.Controllers
             else
             {
                 return View();
+            }
+        }
+
+        [HttpPost]
+        public ActionResult DeleteArticle(int Id)
+        {
+            using(var context = new ApplicationDbContext())
+            {
+                var articleInfo = context.HelpAndAdviceDetails.Where(y => y.Id.Equals(Id)).FirstOrDefault();
+                context.HelpAndAdviceDetails.Remove(articleInfo);
+                return Json(context.SaveChanges(), JsonRequestBehavior.AllowGet);
             }
         }
     }
