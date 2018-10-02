@@ -109,4 +109,10 @@ namespace CodeITCMS.Models
         [Display(Name = "Email")]
         public string Email { get; set; }
     }
+
+    public class RecentBlogs
+    {
+        public int BlogId { get; set; }
+        public string BlogName { get; set; }
+    }
 }

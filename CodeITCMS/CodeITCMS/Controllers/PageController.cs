@@ -119,7 +119,7 @@ namespace CodeITCMS.Controllers
                     ViewBag.NextImageName = nextBlogContext.ImagePath;
                 }
 
-                ViewBag.RecentBlogs = context.BlogContexts.OrderByDescending(x => x.Id).Take(3).Select(y => y.BlogName).ToList();
+                ViewBag.RecentBlogs = context.BlogContexts.OrderByDescending(x => x.Id).Take(3).Select(y => new RecentBlogs { BlogId = y.Id, BlogName = y.BlogName }).ToList();
                 
             }
             return View(blog);
