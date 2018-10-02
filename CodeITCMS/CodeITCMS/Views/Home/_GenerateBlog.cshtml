@@ -1,0 +1,36 @@
+﻿@using CodeITCMS.Models
+@model List<BlogModel>
+<section class="section dark-blue text-center-align" style="background-image: url('../../images/dark_blue_pattern.png');">
+    <div class="container">
+        <h2 data-aos="fade-right">Blog</h2>
+        <div data-aos="fade-up">
+            <p>While many of us won't feel comfortable viewing the funeral of a loved one as something that expenses can be saved on, many of us are shocked by just how much a funeral service can cost. In this selection of articles, we explain what these costs are usually made up of, how you can reduce funeral costs, and how you can get help with paying for a funeral.</p>
+        </div>
+    </div>
+    <div class="blog_block" data-aos="fade-left">
+        <div id="blog_carousel" class="owl-carousel owl-theme">
+            @foreach (var item in Model) { 
+                <div class="item">
+                    <span class="blog_block--date">@item.BlogDate </span>
+                    <div class="blog_block--content text-left-align">
+                        <img src="~/blogImages/@item.ImageName" alt="">
+                        <h4>@item.BlogName</h4>
+                        @{ 
+                            int substrLength = 0;
+                            if (item.BlogContent.Length > 50)
+                            {
+                                substrLength = 50;
+                            }
+                            else
+                            {
+                                substrLength = item.BlogContent.Length;
+                            }
+                        }
+                        <p>@Html.Raw(item.BlogContent.Substring(0, substrLength))..... </p>
+                        <a href="Page/BlogDetail/@item.Id" class="read_more_btn"><span><i class="fas fa-plus"></i></span></a>
+                    </div>
+                </div>
+            } 
+        </div>
+    </div><!-- blog_block -->
+</section><!-- section -->

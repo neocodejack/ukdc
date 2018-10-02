@@ -9,6 +9,7 @@
                     <th>Name</th>
                     <th>Author</th>
                     <th>Date</th>
+                    <th>Image</th>
                     <th>Edit</th>
                     <th>Delete</th>
                 </tr>
@@ -20,6 +21,7 @@
                     <td>@item.BlogName</td>
                     <td>@item.BloggerName</td>
                     <td>@item.BlogDate</td>
+                    <td><img src="~/blogImages/@item.ImageName" height="50px" width="50px" /></td>
                     <td>@Html.ActionLink("Edit", "EditBlog", "Admin", new { id = item.Id }, null)</td>
                     <td><a id="@item.Id" class="btnDelete" href="#">Delete</a></td>
                 </tr>

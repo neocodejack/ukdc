@@ -39,6 +39,8 @@ namespace CodeITCMS.Controllers
                 var Month = DateTime.Now.ToString("MMMM").Substring(0,3);
                 var Year = DateTime.Now.Year;
                 var Day = DateTime.Now.Day;
+                string FileName = string.Empty;
+
                 var blogContext = new BlogContext
                 {
                     BlogName = model.BlogName,
@@ -46,8 +48,22 @@ namespace CodeITCMS.Controllers
                     BlogDate = Month + " " + Day + "," +Year,
                     BloggerName = model.BloggerName
                 };
+                
 
-                using(var context = new ApplicationDbContext())
+                if ((model.File != null) && (model.File.ContentLength > 0))
+                {
+                    FileName = Path.GetFileName(model.File.FileName);
+
+                    string SavePath = Path.Combine(Server.MapPath("~/blogImages"), FileName);
+                    if (!Directory.Exists(Server.MapPath("~/blogImages")))
+                    {
+                        Directory.CreateDirectory(Server.MapPath("~/blogImages"));
+                    }
+                    model.File.SaveAs(SavePath);
+                    blogContext.ImagePath = FileName;
+                }
+
+                using (var context = new ApplicationDbContext())
                 {
                     if((model.Id == 0) || (model.Id == null))
                     {
@@ -61,6 +77,8 @@ namespace CodeITCMS.Controllers
                         item.BlogDate = model.BlogDate;
                         item.BloggerName = model.BloggerName;
                         item.BlogName = model.BlogName;
+                        if(!string.IsNullOrEmpty(FileName))
+                            item.ImagePath = FileName;
                     }
 
                     context.SaveChanges();
@@ -108,6 +126,7 @@ namespace CodeITCMS.Controllers
                         BlogDate = item.BlogDate,
                         BloggerName = item.BloggerName,
                         BlogName = item.BlogName,
+                        ImageName = item.ImagePath,
                         Id = item.Id
                     };
 

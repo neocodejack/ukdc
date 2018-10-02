@@ -52,6 +52,10 @@
                 @Html.Action("GenerateInnerBanner", "Home")
             }
             @RenderBody()
+            @if(ViewBag.PageName == "Blog")
+            {
+                @Html.Action("GenerateBlog","Home")
+            }
         </div>
         <footer id="colophon" class="site-footer" role="contentinfo">
             <div class="site-info">

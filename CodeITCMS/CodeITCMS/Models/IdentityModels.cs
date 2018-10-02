@@ -148,6 +148,8 @@ namespace CodeITCMS.Models
         public string BloggerName { get; set; }
 
         public string BlogDate { get; set; }
+
+        public string ImagePath { get; set; }
     }
 
     public class HelpAndAdviceCategory
