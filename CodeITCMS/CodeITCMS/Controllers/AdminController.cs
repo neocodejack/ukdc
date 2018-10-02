@@ -74,7 +74,7 @@ namespace CodeITCMS.Controllers
                     {
                         var item = context.BlogContexts.Where(y => y.Id == model.Id).FirstOrDefault();
                         item.BlogContent = model.BlogContent;
-                        item.BlogDate = model.BlogDate;
+                        item.BlogDate = Month + " " + Day + "," + Year;
                         item.BloggerName = model.BloggerName;
                         item.BlogName = model.BlogName;
                         if(!string.IsNullOrEmpty(FileName))
