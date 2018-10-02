@@ -77,5 +77,52 @@ namespace CodeITCMS.Controllers
                 return Json(blogDetails, JsonRequestBehavior.AllowGet);
             }
         }
+
+        public ActionResult BlogDetail(int Id)
+        {
+            var blog = new BlogModel();
+            var nextId = Id + 1;
+            var prevId = 0;
+
+            if (Id != 0)
+                prevId = Id - 1;
+
+            using (var context = new ApplicationDbContext())
+            {
+                var blogContext = context.BlogContexts.Where(x => x.Id == Id).FirstOrDefault();
+                if (blogContext != null)
+                {
+                    blog.Id = blogContext.Id;
+                    blog.BloggerName = blogContext.BloggerName;
+                    blog.BlogDate = blogContext.BlogDate;
+                    blog.BlogContent = blogContext.BlogContent;
+                    blog.BlogName = blogContext.BlogName;
+                    blog.ImageName = blogContext.ImagePath;
+                }
+                var prevBlogContext = context.BlogContexts.Where(x => x.Id == prevId).FirstOrDefault();
+                ViewBag.HasPrevData = false;
+                if (prevBlogContext != null)
+                {
+                    ViewBag.HasPrevData = true;
+                    ViewBag.PrevBlogId = prevBlogContext.Id;
+                    ViewBag.PrevContent = prevBlogContext.BlogName;
+                    ViewBag.PrevImageName = prevBlogContext.ImagePath;
+                }
+
+                var nextBlogContext = context.BlogContexts.Where(x => x.Id == nextId).FirstOrDefault();
+                ViewBag.HasNextData = false;
+                if (nextBlogContext != null)
+                {
+                    ViewBag.HasNextData = true;
+                    ViewBag.NextBlogId = prevBlogContext.Id;
+                    ViewBag.NextContent = prevBlogContext.BlogName;
+                    ViewBag.NextImageName = prevBlogContext.ImagePath;
+                }
+
+                ViewBag.RecentBlogs = context.BlogContexts.OrderByDescending(x => x.Id).Take(3).Select(y => y.BlogName).ToList();
+                
+            }
+            return View(blog);
+        }
     }
 }

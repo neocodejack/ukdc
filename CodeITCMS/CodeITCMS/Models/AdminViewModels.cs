@@ -147,6 +147,11 @@ namespace CodeITCMS.Models
         [Display(Name ="Author")]
         public string BloggerName { get; set; }
 
+        public string ImageName { get; set; }
+
+        [Display(Name = "Blog Image")]
+        public HttpPostedFileBase File { get; set; }
+
         public string BlogDate { get; set; }
     }
 
