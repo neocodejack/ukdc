@@ -114,9 +114,9 @@ namespace CodeITCMS.Controllers
                 if (nextBlogContext != null)
                 {
                     ViewBag.HasNextData = true;
-                    ViewBag.NextBlogId = prevBlogContext.Id;
-                    ViewBag.NextContent = prevBlogContext.BlogName;
-                    ViewBag.NextImageName = prevBlogContext.ImagePath;
+                    ViewBag.NextBlogId = nextBlogContext.Id;
+                    ViewBag.NextContent = nextBlogContext.BlogName;
+                    ViewBag.NextImageName = nextBlogContext.ImagePath;
                 }
 
                 ViewBag.RecentBlogs = context.BlogContexts.OrderByDescending(x => x.Id).Take(3).Select(y => y.BlogName).ToList();
