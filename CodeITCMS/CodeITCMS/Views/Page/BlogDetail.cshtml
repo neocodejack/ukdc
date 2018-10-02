@@ -87,7 +87,7 @@
                                             @if (ViewBag.HasPrevData == true)
                                             {
                                             <div class="nav-previous">
-                                                <a href="Page/BlogDetail/@ViewBag.PrevBlogId" rel="prev">
+                                                <a href="~/Page/BlogDetail/@ViewBag.PrevBlogId" rel="prev">
                                                     <img src="~/blogImages/@ViewBag.PrevImageName" class="attachment-thumbnail size-thumbnail wp-post-image alignright" width="82" height="82">
                                                     <span class="meta-nav" aria-hidden="true">Previous</span>
                                                     <span class="screen-reader-text">Previous post:</span>
@@ -98,7 +98,7 @@
                                             @if (ViewBag.HasNextData == true)
                                             {
                                             <div class="nav-next">
-                                                <a href="Page/BlogDetail/@ViewBag.NextBlogId" rel="next">
+                                                <a href="~/Page/BlogDetail/@ViewBag.NextBlogId" rel="next">
                                                     <img src="~/blogImages/@ViewBag.NextImageName" class="attachment-thumbnail size-thumbnail wp-post-image alignleft" width="82" height="82">
                                                     <span class="meta-nav" aria-hidden="true">Next</span>
                                                     <span class="screen-reader-text">Next post::</span>
