@@ -22,6 +22,10 @@ namespace CodeITCMS.Models
         [Required]
         [Display(Name="Menu Index")]
         public int TabIndex { get; set; }
+
+        [Required]
+        [Display(Name ="Is Footer Menu Only")]
+        public bool IsFooterMenuOnly { get; set; }
     }
 
     public class BannerModel

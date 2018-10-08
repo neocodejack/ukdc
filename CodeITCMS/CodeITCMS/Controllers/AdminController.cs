@@ -158,7 +158,8 @@ namespace CodeITCMS.Controllers
                 {
                     Name = model.Name,
                     Link = model.Link,
-                    TabIndex = model.TabIndex
+                    TabIndex = model.TabIndex,
+                    IsFooterMenuOnly = model.IsFooterMenuOnly
                 };
 
                 using (var context = new ApplicationDbContext())
@@ -173,6 +174,7 @@ namespace CodeITCMS.Controllers
                         item.Link = model.Link;
                         item.Name = model.Name;
                         item.TabIndex = model.TabIndex;
+                        item.IsFooterMenuOnly = model.IsFooterMenuOnly;
                     }
 
                     context.SaveChanges();
@@ -223,7 +225,8 @@ namespace CodeITCMS.Controllers
                     Id = Id,
                     Link = menuItem.Link,
                     Name = menuItem.Name,
-                    TabIndex = menuItem.TabIndex
+                    TabIndex = menuItem.TabIndex,
+                    IsFooterMenuOnly = menuItem.IsFooterMenuOnly
                 };
 
                 return View(menuModel);
