@@ -32,7 +32,7 @@ namespace CodeITCMS.Controllers
         {
             using(var context = new ApplicationDbContext())
             {
-                var menu = context.MenuContexts.Select(x=> new MenuModel { Name = x.Name, Link = x.Link, TabIndex = x.TabIndex }).ToList().OrderBy(y=>y.TabIndex);
+                var menu = context.MenuContexts.Select(x=> new MenuModel { Name = x.Name, Link = x.Link, TabIndex = x.TabIndex, IsFooterMenuOnly = x.IsFooterMenuOnly }).ToList().OrderBy(y=>y.TabIndex);
                 
                 return PartialView(menu);
             }
@@ -42,7 +42,7 @@ namespace CodeITCMS.Controllers
         {
             using(var context = new ApplicationDbContext())
             {
-                var menu = context.MenuContexts.Select(x => new MenuModel { Name = x.Name, Link = x.Link, TabIndex = x.TabIndex }).ToList().OrderBy(y => y.TabIndex);
+                var menu = context.MenuContexts.Select(x => new MenuModel { Name = x.Name, Link = x.Link, TabIndex = x.TabIndex,IsFooterMenuOnly = x.IsFooterMenuOnly }).ToList().OrderBy(y => y.TabIndex);
 
                 return PartialView("_GenerateFooterMenu", menu);
             }
@@ -105,6 +105,13 @@ namespace CodeITCMS.Controllers
 
         public ActionResult GenerateInnerBanner(string pageName)
         {
+            ViewBag.IsBlogDetailPage = false;
+            if (pageName == null)
+            {
+                pageName = "Blog";
+                ViewBag.IsBlogDetailPage = true;
+            }
+
             using(var context = new ApplicationDbContext())
             {
                 var page = context.PageContexts.Where(y => y.LinkedMenu.Equals(pageName)).FirstOrDefault();
@@ -128,6 +135,28 @@ namespace CodeITCMS.Controllers
                 context.QueryContexts.Add(queryContext);
 
                 return Json(context.SaveChanges(), JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        public ActionResult GenerateBlog()
+        {
+            using(var context = new ApplicationDbContext())
+            {
+                var blogContext = context.BlogContexts.ToList();
+                var blogs = new List<BlogModel>();
+                foreach(var item in blogContext)
+                {
+                    var blog = new BlogModel();
+                    blog.BlogContent = item.BlogContent;
+                    blog.BlogDate = item.BlogDate;
+                    blog.BloggerName = item.BloggerName;
+                    blog.BlogName = item.BlogName;
+                    blog.Id = item.Id;
+                    blog.ImageName = item.ImagePath;
+                    blogs.Add(blog);
+                }
+
+                return PartialView("_GenerateBlog", blogs);
             }
         }
     }

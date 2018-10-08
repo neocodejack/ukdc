@@ -2052,6 +2052,17 @@
     <Content Include="Views\Admin\EditMenu.cshtml" />
     <Content Include="Views\Admin\EditBanner.cshtml" />
     <Content Include="Views\Admin\EditFooter.cshtml" />
+    <Content Include="Views\Admin\ViewBlogs.cshtml" />
+    <Content Include="Views\Admin\AddBlog.cshtml" />
+    <Content Include="Views\Admin\EditBlog.cshtml" />
+    <Content Include="Views\Admin\EditCategory.cshtml" />
+    <Content Include="Views\Admin\ViewCategory.cshtml" />
+    <Content Include="Views\Admin\AddCategory.cshtml" />
+    <Content Include="Views\Admin\ViewArticle.cshtml" />
+    <Content Include="Views\Admin\EditArticle.cshtml" />
+    <Content Include="Views\Admin\AddArticle.cshtml" />
+    <Content Include="Views\Home\_GenerateBlog.cshtml" />
+    <Content Include="Views\Page\BlogDetail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

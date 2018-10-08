@@ -1,6 +1,17 @@
 ﻿@using CodeITCMS.Models
 @model PageContext
-<div class="banner inner-banner" style="background-image: url('InnerBanners/@Model.FeatureImage');">
+@{ 
+    var imagePath = string.Empty;
+    if (ViewBag.IsBlogDetailPage == false) {
+        imagePath = "InnerBanners/" + Model.FeatureImage;
+    }
+    else
+    {
+        imagePath = "../../InnerBanners/" + Model.FeatureImage;
+    }
+
+}
+<div class="banner inner-banner" style="background-image: url('@imagePath');">
     <div class="container">
         <div class="page-title">
             <h2>@Model.FeatureText<span class="cross_icon"><i class="fas fa-times"></i></span></h2>

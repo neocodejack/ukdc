@@ -1,5 +1,5 @@
 ﻿@using CodeITCMS.Models
-@model IEnumerable<BannerModel>
+@model IEnumerable<BlogModel>
 
 <div class="card-body">
     <div class="table-responsive">
@@ -7,8 +7,9 @@
             <thead>
                 <tr>
                     <th>Name</th>
-                    <th>Link</th>
-                    <th>Tab Index</th>
+                    <th>Author</th>
+                    <th>Date</th>
+                    <th>Image</th>
                     <th>Edit</th>
                     <th>Delete</th>
                 </tr>
@@ -16,13 +17,14 @@
             <tbody>
                 @foreach (var item in Model)
                 {
-                    <tr>
-                        <td>@item.Title</td>
-                        <td>@item.SubTitle</td>
-                        <td><img src="~/Banners/@item.Path" height="50px" width="50px"/></td>
-                        <td>@Html.ActionLink("Edit", "EditBanner", "Admin", new { id = item.Id }, null)</td>
-                        <td><a id="@item.Id" class="btnDelete" href="#">Delete</a></td>
-                    </tr>
+                <tr>
+                    <td>@item.BlogName</td>
+                    <td>@item.BloggerName</td>
+                    <td>@item.BlogDate</td>
+                    <td><img src="~/blogImages/@item.ImageName" height="50px" width="50px" /></td>
+                    <td>@Html.ActionLink("Edit", "EditBlog", "Admin", new { id = item.Id }, null)</td>
+                    <td><a id="@item.Id" class="btnDelete" href="#">Delete</a></td>
+                </tr>
                 }
             </tbody>
         </table>
@@ -36,7 +38,7 @@
                 var recordId = $(this).attr("id");
                 $.ajax({
                     type: "POST",
-                    url: "@Url.Action("DeleteBanner", "Admin")",
+                    url: "@Url.Action("DeleteBlog", "Admin")",
                     data: JSON.stringify({ "Id": recordId }),
                     contentType: "application/json",
                     success: function (response) {

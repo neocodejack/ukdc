@@ -1,0 +1,27 @@
+﻿@using CodeITCMS.Models
+@model HelpAndAdviceDetailModel
+@{
+    ViewBag.Title = "Add Article";
+}
+
+@using (Html.BeginForm("AddArticle", "Admin", FormMethod.Post, new { @class = "login100-form validate-form", role = "form", @autocomplete = "off", enctype = "multipart/form-data" }))
+{
+    @Html.HiddenFor(m => m.Id)
+    @Html.LabelFor(m => m.Heading, new { })
+    @Html.TextBoxFor(m => m.Heading, new { @id = "inputEmail", @class = "form-control", @autocomplete = "off", @placeholder = "Page Title", @autofocus = "autofocus", @required = "required" })
+    <br />
+    @Html.LabelFor(m => m.SubHeading, new { })
+    @Html.TextBoxFor(m => m.SubHeading, new { @id = "inputEmail", @class = "form-control", @autocomplete = "off", @placeholder = "Page Title", @autofocus = "autofocus", @required = "required" })
+    <br/>
+    @Html.LabelFor(m=>m.Content)
+    @Html.EditorFor(editor => editor.Content)
+    <br />
+    @Html.LabelFor(m=>m.CategoryId)
+    @Html.DropDownListFor(m=>m.CategoryId, new SelectList(ViewBag.Categories,
+                             "Key",
+                             "Value"), "Select", new { @id = "inputEmail", @class = "form-control", @autocomplete = "off", @placeholder = "Menu Title", @autofocus = "autofocus", @required = "required" })
+    <input type="submit" class="btn btn-primary " name="Add" value="Submit" style="width:49.5%; text-align:center" />
+    <input type="button" class="btn btn-default " name="Clear" value="Clear" style="width:49.5%; text-align:center" />
+
+}
+

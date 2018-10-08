@@ -1,0 +1,19 @@
+﻿@using CodeITCMS.Models
+@model HelpAndAdviceCategoryModel
+@{
+    ViewBag.Title = "Add Blog";
+}
+
+@using (Html.BeginForm("AddCategory", "Admin", FormMethod.Post, new { @class = "login100-form validate-form", role = "form", @autocomplete = "off", enctype = "multipart/form-data" }))
+{
+    @Html.HiddenFor(m => m.Id)
+    @Html.LabelFor(m => m.Category, new { })
+    @Html.TextBoxFor(m => m.Category, new { @id = "inputEmail", @class = "form-control", @autocomplete = "off", @placeholder = "Page Title", @autofocus = "autofocus", @required = "required" })
+    <br />
+
+    <input type="submit" class="btn btn-primary " name="Add" value="Submit" style="width:49.5%; text-align:center" />
+    <input type="button" class="btn btn-default " name="Clear" value="Clear" style="width:49.5%; text-align:center" />
+
+}
+
+

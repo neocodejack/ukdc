@@ -22,6 +22,10 @@ namespace CodeITCMS.Models
         [Required]
         [Display(Name="Menu Index")]
         public int TabIndex { get; set; }
+
+        [Required]
+        [Display(Name ="Is Footer Menu Only")]
+        public bool IsFooterMenuOnly { get; set; }
     }
 
     public class BannerModel
@@ -75,6 +79,12 @@ namespace CodeITCMS.Models
         public string Value { get; set; }
     }
 
+    public class CategoryDropDown
+    {
+        public string Key { get; set; }
+        public string Value { get; set; }
+    }
+
     public class PhoneModel
     {
         public int? Id { get; set; }
@@ -122,5 +132,64 @@ namespace CodeITCMS.Models
 
         [Display(Name ="Query")]
         public string Query { get; set; }
+    }
+
+    public class BlogModel
+    {
+        public int? Id { get; set; }
+
+        [Required]
+        [Display(Name ="Name")]
+        public string BlogName { get; set; }
+
+        [Required]
+        [Display(Name ="Content")]
+        [UIHint("tinymce_jquery_full"), AllowHtml]
+        public string BlogContent { get; set; }
+
+        [Required]
+        [Display(Name ="Author")]
+        public string BloggerName { get; set; }
+
+        public string ImageName { get; set; }
+
+        [Display(Name = "Blog Image")]
+        public HttpPostedFileBase File { get; set; }
+
+        public string BlogDate { get; set; }
+    }
+
+    public class HelpAndAdviceCategoryModel
+    {
+        public int? Id { get; set; }
+        [Required]
+        public string Category { get; set; }
+    }
+
+    public class HelpAndAdviceDetailModel
+    {
+        public int? Id { get; set; }
+        [Required]
+        [Display(Name ="Heading")]
+        public string Heading { get; set; }
+        [Required]
+        [Display(Name = "Sub - Heading")]
+        public string SubHeading { get; set; }
+        [Required]
+        [Display(Name ="Category")]
+        public int CategoryId { get; set; }
+        [Required]
+        [UIHint("tinymce_jquery_full"), AllowHtml]
+        [Display(Name = "Content")]
+        public string Content { get; set; }
+
+        public DateTime LastUpdated { get; set; }
+    }
+
+    public class CategoryByArticle
+    {
+        public int CategoryId { get; set; }
+        public string CategoryName { get; set; }
+        public int ArticleNumber { get; set; }
     }
 }

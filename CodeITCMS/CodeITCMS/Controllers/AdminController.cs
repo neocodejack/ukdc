@@ -24,6 +24,131 @@ namespace CodeITCMS.Controllers
             return View(model);
         }
 
+        [HttpGet]
+        public ActionResult AddBlog()
+        {
+            var model = new BlogModel();
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult AddBlog(BlogModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var Month = DateTime.Now.ToString("MMMM").Substring(0,3);
+                var Year = DateTime.Now.Year;
+                var Day = DateTime.Now.Day;
+                string FileName = string.Empty;
+
+                var blogContext = new BlogContext
+                {
+                    BlogName = model.BlogName,
+                    BlogContent = model.BlogContent,
+                    BlogDate = Month + " " + Day + "," +Year,
+                    BloggerName = model.BloggerName
+                };
+                
+
+                if ((model.File != null) && (model.File.ContentLength > 0))
+                {
+                    FileName = Path.GetFileName(model.File.FileName);
+
+                    string SavePath = Path.Combine(Server.MapPath("~/blogImages"), FileName);
+                    if (!Directory.Exists(Server.MapPath("~/blogImages")))
+                    {
+                        Directory.CreateDirectory(Server.MapPath("~/blogImages"));
+                    }
+                    model.File.SaveAs(SavePath);
+                    blogContext.ImagePath = FileName;
+                }
+
+                using (var context = new ApplicationDbContext())
+                {
+                    if((model.Id == 0) || (model.Id == null))
+                    {
+                        context.BlogContexts.Add(blogContext);
+
+                    }
+                    else
+                    {
+                        var item = context.BlogContexts.Where(y => y.Id == model.Id).FirstOrDefault();
+                        item.BlogContent = model.BlogContent;
+                        item.BlogDate = Month + " " + Day + "," + Year;
+                        item.BloggerName = model.BloggerName;
+                        item.BlogName = model.BlogName;
+                        if(!string.IsNullOrEmpty(FileName))
+                            item.ImagePath = FileName;
+                    }
+
+                    context.SaveChanges();
+                }
+
+                return RedirectToAction("ViewBlogs");
+            }
+            else
+            {
+                return View();
+            }
+        }
+
+        [HttpGet]
+        public ActionResult EditBlog(int Id)
+        {
+            using (var context = new ApplicationDbContext())
+            {
+                var blogItem = context.BlogContexts.Where(y => y.Id == Id).FirstOrDefault();
+                var blogModel = new BlogModel
+                {
+                    Id = Id,
+                    BloggerName = blogItem.BloggerName,
+                    BlogName = blogItem.BlogName,
+                    BlogContent = blogItem.BlogContent,
+                    BlogDate = blogItem.BlogDate
+                };
+
+                return View(blogModel);
+            }
+        }
+
+        [HttpGet]
+        public ActionResult ViewBlogs()
+        {
+            var blogs = new List<BlogModel>();
+            using(var context = new ApplicationDbContext())
+            {
+                var blogsInfo = context.BlogContexts.ToList();
+                foreach(var item in blogsInfo)
+                {
+                    var blog = new BlogModel
+                    {
+                        BlogContent = item.BlogContent,
+                        BlogDate = item.BlogDate,
+                        BloggerName = item.BloggerName,
+                        BlogName = item.BlogName,
+                        ImageName = item.ImagePath,
+                        Id = item.Id
+                    };
+
+                    blogs.Add(blog);
+                }
+
+                return View(blogs);
+            }
+        }
+
+        [HttpPost]
+        public ActionResult DeleteBlog(int Id)
+        {
+            using(var context = new ApplicationDbContext())
+            {
+                var blogInfo = context.BlogContexts.Where(y => y.Id.Equals(Id)).FirstOrDefault();
+                context.BlogContexts.Remove(blogInfo);
+
+                return Json(context.SaveChanges(), JsonRequestBehavior.AllowGet);
+            }
+        }
+
         [HttpPost]
         public ActionResult AddMenu(MenuModel model)
         {
@@ -33,7 +158,8 @@ namespace CodeITCMS.Controllers
                 {
                     Name = model.Name,
                     Link = model.Link,
-                    TabIndex = model.TabIndex
+                    TabIndex = model.TabIndex,
+                    IsFooterMenuOnly = model.IsFooterMenuOnly
                 };
 
                 using (var context = new ApplicationDbContext())
@@ -48,6 +174,7 @@ namespace CodeITCMS.Controllers
                         item.Link = model.Link;
                         item.Name = model.Name;
                         item.TabIndex = model.TabIndex;
+                        item.IsFooterMenuOnly = model.IsFooterMenuOnly;
                     }
 
                     context.SaveChanges();
@@ -98,10 +225,22 @@ namespace CodeITCMS.Controllers
                     Id = Id,
                     Link = menuItem.Link,
                     Name = menuItem.Name,
-                    TabIndex = menuItem.TabIndex
+                    TabIndex = menuItem.TabIndex,
+                    IsFooterMenuOnly = menuItem.IsFooterMenuOnly
                 };
 
                 return View(menuModel);
+            }
+        }
+
+        [HttpPost]
+        public ActionResult DeleteMenu(int Id)
+        {
+            using(var context = new ApplicationDbContext())
+            {
+                var menuInfo = context.MenuContexts.Where(y => y.Id.Equals(Id)).FirstOrDefault();
+                context.MenuContexts.Remove(menuInfo);
+                return Json(context.SaveChanges(), JsonRequestBehavior.AllowGet);
             }
         }
 
@@ -123,7 +262,7 @@ namespace CodeITCMS.Controllers
                 bannerInfo.SubTitle = model.SubTitle;
                 string FileName = string.Empty;
 
-                if (model.File.ContentLength > 0)
+                if ((model.File != null) && (model.File.ContentLength > 0))
                 {
                     FileName = Path.GetFileName(model.File.FileName);
                     string SavePath = Path.Combine(Server.MapPath("~/Banners"), FileName);
@@ -201,6 +340,17 @@ namespace CodeITCMS.Controllers
             }
         }
 
+        [HttpPost]
+        public ActionResult DeleteBanner(int Id)
+        {
+            using(var context = new ApplicationDbContext())
+            {
+                var bannerInfo = context.BannerContexts.Where(y => y.Id.Equals(Id)).FirstOrDefault();
+                context.BannerContexts.Remove(bannerInfo);
+                return Json(context.SaveChanges(), JsonRequestBehavior.AllowGet);
+            }
+        }
+
         [HttpGet]
         public ActionResult AddPage()
         {
@@ -249,7 +399,9 @@ namespace CodeITCMS.Controllers
                     else
                     {
                         var item = context.PageContexts.Where(y => y.Id == model.Id).FirstOrDefault();
-                        item.FeatureImage = FileName;
+                        if(!string.IsNullOrEmpty(FileName))
+                            item.FeatureImage = FileName;
+
                         item.FeatureText = model.FeatureText;
                         item.LinkedMenu = model.MenuName;
                         item.PageContent = model.Content;
@@ -267,6 +419,17 @@ namespace CodeITCMS.Controllers
 
             ViewBag.Message = "Successfully Saved";
             return RedirectToAction("ViewPages");
+        }
+
+        [HttpPost]
+        public ActionResult DeletePage(int Id)
+        {
+            using(var context = new ApplicationDbContext())
+            {
+                var pageInfo = context.PageContexts.Where(y => y.Id.Equals(Id)).FirstOrDefault();
+                context.PageContexts.Remove(pageInfo);
+                return Json(context.SaveChanges(), JsonRequestBehavior.AllowGet);
+            }
         }
 
         [HttpGet]
@@ -508,5 +671,191 @@ namespace CodeITCMS.Controllers
             return View(queryModel);
         }
 
+        [HttpGet]
+        public ActionResult AddCategory()
+        {
+            var model = new HelpAndAdviceCategoryModel();
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult AddCategory(HelpAndAdviceCategoryModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                using(var context = new ApplicationDbContext())
+                {
+                    if ((model.Id == 0) || (model.Id == null))
+                    {
+                        var modelContext = new HelpAndAdviceCategory
+                        {
+                            Category = model.Category
+                        };
+
+                        context.HelpAndAdviceCategories.Add(modelContext);
+                    }
+                    else
+                    {
+                        var modelContext = context.HelpAndAdviceCategories.Where(y => y.Id == model.Id).FirstOrDefault();
+                        modelContext.Category = model.Category;
+                    }
+                    context.SaveChanges();
+                }
+
+                return RedirectToAction("ViewCategory");
+            }
+            else
+            {
+                return View();
+            }
+        }
+
+        [HttpGet]
+        public ActionResult ViewCategory()
+        {
+            using(var context = new ApplicationDbContext())
+            {
+                var categories = new List<HelpAndAdviceCategoryModel>();
+                var categoriesContext = context.HelpAndAdviceCategories.ToList();
+                foreach(var item in categoriesContext)
+                {
+                    var category = new HelpAndAdviceCategoryModel
+                    {
+                        Id = item.Id,
+                        Category = item.Category
+                    };
+
+                    categories.Add(category);
+                }
+
+                return View(categories);
+            }
+        }
+
+        [HttpGet]
+        public ActionResult EditCategory(int Id)
+        {
+            using(var context = new ApplicationDbContext())
+            {
+                var categoryInfo = context.HelpAndAdviceCategories.Where(y => y.Id == Id).FirstOrDefault();
+                var categoryModel = new HelpAndAdviceCategoryModel
+                {
+                    Id = categoryInfo.Id,
+                    Category = categoryInfo.Category
+                };
+
+                return View(categoryModel);
+            }
+        }
+
+        [HttpGet]
+        public ActionResult AddArticle()
+        {
+            var model = new HelpAndAdviceDetailModel();
+            using(var context = new ApplicationDbContext())
+            {
+                var categories = context.HelpAndAdviceCategories.Select(x => new CategoryDropDown { Key = x.Id.ToString(), Value = x.Category }).ToList();
+                ViewBag.Categories = categories;
+            }
+            return View(model);
+        }
+
+        [HttpGet]
+        public ActionResult EditArticle(int Id)
+        {
+            using(var context = new ApplicationDbContext())
+            {
+                var articleInfo = context.HelpAndAdviceDetails.Where(y => y.Id == Id).FirstOrDefault();
+                var articleModel = new HelpAndAdviceDetailModel
+                {
+                    CategoryId = articleInfo.CategoryId,
+                    Content = articleInfo.Content,
+                    Heading = articleInfo.Heading,
+                    Id = articleInfo.Id,
+                    SubHeading = articleInfo.SubHeading
+                };
+                var categories = context.HelpAndAdviceCategories.Select(x => new CategoryDropDown { Key = x.Id.ToString(), Value = x.Category }).ToList();
+                ViewBag.Categories = categories;
+                return View(articleModel);
+            }
+        }
+
+        [HttpGet]
+        public ActionResult ViewArticle()
+        {
+            using(var context = new ApplicationDbContext())
+            {
+                var articles = new List<HelpAndAdviceDetailModel>();
+
+                var articlesContext = context.HelpAndAdviceDetails.ToList();
+                foreach(var item in articlesContext)
+                {
+                    var article = new HelpAndAdviceDetailModel
+                    {
+                        Id = item.Id,
+                        Heading = item.Heading,
+                        SubHeading = item.SubHeading,
+                        Content = item.Content,
+                        CategoryId = item.CategoryId
+                    };
+
+                    articles.Add(article);
+                }
+
+                return View(articles);
+            }
+        }
+
+        [HttpPost]
+        public ActionResult AddArticle(HelpAndAdviceDetailModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                using (var context = new ApplicationDbContext())
+                {
+                    if ((model.Id == 0) || (model.Id == null))
+                    {
+                        var detailContext = new HelpAndAdviceDetail
+                        {
+                            Content = model.Content,
+                            CategoryId = model.CategoryId,
+                            Heading = model.Heading,
+                            SubHeading = model.SubHeading,
+                            LastUpdated = DateTime.Now
+                        };
+
+                        context.HelpAndAdviceDetails.Add(detailContext);
+                    }
+                    else
+                    {
+                        var detailContext = context.HelpAndAdviceDetails.Where(y => y.Id == model.Id).FirstOrDefault();
+                        detailContext.Content = model.Content;
+                        detailContext.CategoryId = model.CategoryId;
+                        detailContext.Heading = model.Heading;
+                        detailContext.SubHeading = model.SubHeading;
+                        detailContext.LastUpdated = DateTime.Now;
+                    }
+
+                    context.SaveChanges();
+                }
+
+                return RedirectToAction("ViewArticle");
+            }
+            else
+            {
+                return View();
+            }
+        }
+
+        [HttpPost]
+        public ActionResult DeleteArticle(int Id)
+        {
+            using(var context = new ApplicationDbContext())
+            {
+                var articleInfo = context.HelpAndAdviceDetails.Where(y => y.Id.Equals(Id)).FirstOrDefault();
+                context.HelpAndAdviceDetails.Remove(articleInfo);
+                return Json(context.SaveChanges(), JsonRequestBehavior.AllowGet);
+            }
+        }
     }
 }

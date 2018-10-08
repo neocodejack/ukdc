@@ -1,0 +1,25 @@
+﻿@using CodeITCMS.Models
+@model BlogModel
+@{
+    ViewBag.Title = "Add Blog";
+}
+
+@using (Html.BeginForm("AddBlog", "Admin", FormMethod.Post, new { @class = "login100-form validate-form", role = "form", @autocomplete = "off", enctype = "multipart/form-data" }))
+{
+    @Html.HiddenFor(m => m.Id)
+    @Html.LabelFor(m => m.BlogName, new { })
+    @Html.TextBoxFor(m => m.BlogName, new { @id = "inputEmail", @class = "form-control", @autocomplete = "off", @placeholder = "Page Title", @autofocus = "autofocus", @required = "required" })
+    <br />
+    @Html.LabelFor(m => m.BlogContent, new { })
+    @Html.EditorFor(editor => editor.BlogContent)
+    <br />
+    @Html.LabelFor(m => m.BloggerName, new { })
+    @Html.TextBoxFor(m => m.BloggerName, new { @id = "inputEmail", @class = "form-control", @autocomplete = "off", @placeholder = "Feature Text", @autofocus = "autofocus", @required = "required" })
+    <br />
+    <label>Upload Image</label>
+    <input type="file" name="File"/>
+    <br/>
+    <input type="submit" class="btn btn-primary " name="Add" value="Submit" style="width:49.5%; text-align:center" />
+    <input type="button" class="btn btn-default " name="Clear" value="Clear" style="width:49.5%; text-align:center" />
+
+}

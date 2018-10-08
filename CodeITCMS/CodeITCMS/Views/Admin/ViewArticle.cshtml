@@ -1,14 +1,13 @@
 ﻿@using CodeITCMS.Models
-@model IEnumerable<BannerModel>
+@model IEnumerable<HelpAndAdviceDetailModel>
 
 <div class="card-body">
     <div class="table-responsive">
         <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
             <thead>
                 <tr>
-                    <th>Name</th>
-                    <th>Link</th>
-                    <th>Tab Index</th>
+                    <th>Heading</th>
+                    <th>Sub-Heading</th>
                     <th>Edit</th>
                     <th>Delete</th>
                 </tr>
@@ -17,10 +16,9 @@
                 @foreach (var item in Model)
                 {
                     <tr>
-                        <td>@item.Title</td>
-                        <td>@item.SubTitle</td>
-                        <td><img src="~/Banners/@item.Path" height="50px" width="50px"/></td>
-                        <td>@Html.ActionLink("Edit", "EditBanner", "Admin", new { id = item.Id }, null)</td>
+                        <td>@item.Heading</td>
+                        <td>@item.SubHeading</td>
+                        <td>@Html.ActionLink("Edit", "EditArticle", "Admin", new { id = item.Id }, null)</td>
                         <td><a id="@item.Id" class="btnDelete" href="#">Delete</a></td>
                     </tr>
                 }
@@ -36,7 +34,7 @@
                 var recordId = $(this).attr("id");
                 $.ajax({
                     type: "POST",
-                    url: "@Url.Action("DeleteBanner", "Admin")",
+                    url: "@Url.Action("DeleteArticle", "Admin")",
                     data: JSON.stringify({ "Id": recordId }),
                     contentType: "application/json",
                     success: function (response) {
