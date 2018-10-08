@@ -5,8 +5,11 @@
     <ul id="menu-nav" class="primary-menu">
         @foreach (var item in Model)
         {
+            if (!item.IsFooterMenuOnly)
+            {
             <li>@Html.ActionLink(item.Name, "Index", "Page", new { pageName = item.Link }, null)</li>
+            }
         }
-        
+
     </ul>
 </nav>

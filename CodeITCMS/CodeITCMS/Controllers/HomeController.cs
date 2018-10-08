@@ -32,7 +32,7 @@ namespace CodeITCMS.Controllers
         {
             using(var context = new ApplicationDbContext())
             {
-                var menu = context.MenuContexts.Select(x=> new MenuModel { Name = x.Name, Link = x.Link, TabIndex = x.TabIndex }).ToList().OrderBy(y=>y.TabIndex);
+                var menu = context.MenuContexts.Select(x=> new MenuModel { Name = x.Name, Link = x.Link, TabIndex = x.TabIndex, IsFooterMenuOnly = x.IsFooterMenuOnly }).ToList().OrderBy(y=>y.TabIndex);
                 
                 return PartialView(menu);
             }
@@ -42,7 +42,7 @@ namespace CodeITCMS.Controllers
         {
             using(var context = new ApplicationDbContext())
             {
-                var menu = context.MenuContexts.Select(x => new MenuModel { Name = x.Name, Link = x.Link, TabIndex = x.TabIndex }).ToList().OrderBy(y => y.TabIndex);
+                var menu = context.MenuContexts.Select(x => new MenuModel { Name = x.Name, Link = x.Link, TabIndex = x.TabIndex,IsFooterMenuOnly = x.IsFooterMenuOnly }).ToList().OrderBy(y => y.TabIndex);
 
                 return PartialView("_GenerateFooterMenu", menu);
             }

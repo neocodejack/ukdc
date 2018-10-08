@@ -56,6 +56,8 @@ namespace CodeITCMS.Models
         public string Link { get; set; }
 
         public int TabIndex { get; set; }
+
+        public bool IsFooterMenuOnly { get; set; }
     }
 
     public class BannerContext
